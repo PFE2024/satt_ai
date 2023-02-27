@@ -17,12 +17,12 @@ env/Scripts/Activate.ps1
 
 
  in Mac
-source env/bin/activate
+source venv/bin/activate
 
 
 create requirements.txt
 
-pip freeze > requirements.txt
+pip freeze > requirements2_venv.txt
 
 
-pip install -r requirements.txt
+pip install -r requirements2_venv.txt
