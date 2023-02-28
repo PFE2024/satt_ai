@@ -13,7 +13,7 @@ python3.8 -m venv env
 
 activate env 
 in windows
-env/Scripts/Activate.ps1
+venv/Scripts/Activate.ps1
 
 
  in Mac
