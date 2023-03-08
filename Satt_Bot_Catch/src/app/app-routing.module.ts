@@ -10,6 +10,8 @@ import { PagesError404Component } from './pages/pages-error404/pages-error404.co
 import { PagesLoginComponent } from './pages/pages-login/pages-login.component';
 import { PagesRegisterComponent } from './pages/pages-register/pages-register.component';
 import { UsersProfileComponent } from './pages/users-profile/users-profile.component';
+import { TwitterResultatComponent } from './components/twitter-resultat/twitter-resultat.component';
+import { TwitterInputComponent } from './components/twitter-input/twitter-input.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'pages-login', component: PagesLoginComponent },
   { path: 'pages-register', component: PagesRegisterComponent },
   { path: 'user-profile', component: UsersProfileComponent },
+  { path: 'twitter-resultat', component: TwitterResultatComponent },
+  { path: 'twitter-input', component: TwitterInputComponent }
 ];
 
 @NgModule({

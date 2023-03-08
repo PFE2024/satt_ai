@@ -16,6 +16,8 @@ import { PagesContactComponent } from './pages/pages-contact/pages-contact.compo
 import { PagesRegisterComponent } from './pages/pages-register/pages-register.component';
 import { PagesLoginComponent } from './pages/pages-login/pages-login.component';
 import { PagesError404Component } from './pages/pages-error404/pages-error404.component';
+import { TwitterResultatComponent } from './components/twitter-resultat/twitter-resultat.component';
+import { TwitterInputComponent } from './components/twitter-input/twitter-input.component';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { PagesError404Component } from './pages/pages-error404/pages-error404.co
     PagesRegisterComponent,
     PagesLoginComponent,
     PagesError404Component,
+    TwitterResultatComponent,
+    TwitterInputComponent,
    
   ],
   imports: [
