@@ -71,11 +71,11 @@ class TwitterPreprocessor:
             .remove_punctuation() \
             .remove_single_letter_words() \
             .remove_three_letter_words()\
-            .remove_blank_spaces() \
             .remove_stopwords() \
             .lowercase() \
             .remove_non_ascii()\
-            .remove_numbers() 
+            .remove_numbers() \
+            .remove_blank_spaces() 
 
     def partially_preprocess(self):
         return self \
@@ -85,8 +85,8 @@ class TwitterPreprocessor:
             .remove_twitter_reserved_words() \
             .remove_emojis() \
             .remove_punctuation() \
-            .remove_blank_spaces() \
-            .remove_non_ascii()
+            .remove_non_ascii()\
+            .remove_blank_spaces()
 
     def pos_tag_preprocess(self):
         return self \
@@ -95,8 +95,8 @@ class TwitterPreprocessor:
             .remove_hashtags() \
             .remove_twitter_reserved_words() \
             .remove_emojis() \
-            .remove_blank_spaces() \
-            .remove_non_ascii()
+            .remove_non_ascii() \
+            .remove_blank_spaces()
 
     def remove_urls(self):
         self.text = re.sub(pattern=get_url_patern(), repl='', string=self.text)
