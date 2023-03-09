@@ -11,6 +11,8 @@ create envirenment
 python3.8 -m venv env
 
 
+deactivate
+
 activate env 
 in windows
 venv/Scripts/Activate.ps1
