@@ -7,3 +7,66 @@
 #my-icon2 {
     color: #0496FF;
   }
+  #my-icon3 {
+    color: #FF00FF;
+  }
+  #my-icon4 {
+    color: #000080;
+  }
+.btn{
+  color: #000080;
+}
+.input-group.md-form.form-sm.form-2 input.red-border {
+  border: 1px solid #ef9a9a;
+}
+::ng-deep select option {
+  border: 1px solid red;
+}
+.icons{
+  display: flex;
+  column-gap: 25px;
+}
+.icon{
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 26px;
+  color: #000000;
+  border-radius: 50%;
+  outline: 2px solid #000000;
+  transition-property: outline-offset, outline-color, background-color;
+  transition-duration: .25s;
+}
+.icon:hover{
+  outline-offset: 4px;
+}
+.icon:hover i{
+  animation: shake .25s;
+}
+.icon--instagram{
+  background-image: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  outline-color: #a02d76;
+}
+.icon--twitter{
+  background-color: #1da1f2;
+  outline-color: #1da1f2;
+}
+.icon--linkedin{
+  background-color: #0077b5;
+  outline-color: #0077b5;
+}
+.icon--facebook{
+  background-color: #285AEB;
+  outline-color: #285AEB;
+}
+@keyframes shake{
+  10%{transform: rotate(15deg);}
+  20%{transform: rotate(-15deg);}
+  30%{transform: rotate(15deg);}
+  40%{transform: rotate(-15deg);}
+
+}
+
