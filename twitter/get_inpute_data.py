@@ -48,7 +48,7 @@ def creation_year(year):
         dt = datetime.datetime.strptime(str(year), '%Y-%m-%d %H:%M:%S')
         return dt.year
     except  Exception as e:
-        print("except", e)
+        
         return 0
 
 
@@ -58,15 +58,15 @@ def test_url(url):
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
         response = requests.get(url, headers=headers, timeout=30)
       
-        print(response.status_code)
+       
         if response.status_code == 200:
-            print("work")
+            
             return 1
         else:
-            print("don't")
+           
             return -1
     except Exception as e:
-        print("except", e)
+       
         return 0
 
 
@@ -99,7 +99,7 @@ def get_details(username):
     retweeted = 0
     most_recent_post = 0
     tweet_language = ''
-    print("url", user["url"])
+    
     try:
         timeline = api.user_timeline(
             screen_name=username, count=200, include_rts=True, tweet_mode="extended")
@@ -136,23 +136,21 @@ def get_details(username):
     user_data = {
         "verified": user["verified"],
         "statuses": user["statuses_count"],
-        "userNameScore": userNameScore,
-        "location": user["location"],
-        "URL works": user["url"],
-        "date_joined": dateofjoin,
-        "most_recent_post": most_recent_post,
-        "following": user["friends_count"],
+         "location": user["location"],
+          "date_joined": dateofjoin,
+           "most_recent_post": most_recent_post,
+            "following": user["friends_count"],
         "followers": user["followers_count"],
-        "favourites": user["favourites_count"],
+"favourites": user["favourites_count"],
         "lists": user["listed_count"],
         "tweet_language": tweet_language,
-        "tweets_this_week": num_of_tweets_this_week,
+           "tweets_this_week": num_of_tweets_this_week,
         "retweet": int(num_of_retweets_by_user),
         "retweeted_count": int(retweeted),
-        "avg_tweets_by_day_of_week": avg_tweets_by_day_of_week,
+ "URL works": user["url"],
+        "userNameScore": userNameScore,
         "avg_tweets_by_hour_of_day": avg_tweets_by_hour_of_day,
+        "avg_tweets_by_day_of_week": avg_tweets_by_day_of_week,
+        "screen_name":user["screen_name"],
     }
     return (user_data)
-
-
-print(get_details('BillGates'))

@@ -2,7 +2,7 @@
 
 # # import
 import sys
-print(sys.executable)
+
 import numpy as np 
 import pandas as pd 
 from sklearn.model_selection import train_test_split
@@ -16,26 +16,105 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+import get_inpute_data 
+import csv
 import joblib
+import os
 # # load data
-def fun():
-    data = pd.read_csv('./Data/featuresfloatv3.csv')
-    x=x.loc[:,['statuses' , 'date_joined' , 'most_recent_post' , 'following' , 'followers' , 'likes', 'retweet' , 'retweeted_count'  ,'avg_tweets_by_hour_of_day', 'avg_tweets_by_day_of_week'   ]]
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42,stratify=y)
-    # scale features
-    # Create an instance of StandardScaler
-    scaler = StandardScaler()
-
-    # Fit the scaler to your data
-    x_train = scaler.fit_transform(x_train)
-    x_test = scaler.transform(x_test)
-    # Transform the data using PCA
-    pca = PCA(n_components=10)
-    x_train = pca.fit_transform(x_train)
-    x_test = pca.transform(x_test)
-    clf=RandomForestClassifier(n_estimators=100, random_state=42)
+def run():
+    data = pd.read_csv('./Data/featuresfloatvf.csv')
+    
+    # x=data.loc[:,['statuses' , 'date_joined' , 'most_recent_post' , 'following' , 'followers' , 'likes', 'retweet' , 'retweeted_count'  ,'avg_tweets_by_hour_of_day', 'avg_tweets_by_day_of_week']]
+    x=data.iloc[:, :-2]
+  
     y = data.account_type.values.tolist()
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42,stratify=y)
+    # # # scale features
+    # # # Create an instance of StandardScaler
+    # scaler = StandardScaler()
+    # # Fit the scaler to your data
+    # x_train = scaler.fit_transform(x_train)
+    # x_test = scaler.transform(x_test)
+    # sm = ADASYN(random_state=42)
+    # x_train,y_train = sm.fit_resample(x_train,y_train)
+    clf=RandomForestClassifier()
     clf.fit(x_train,y_train)
-
     joblib.dump(clf, "clf.pkl")
+
+def rerun():  
+    data = pd.read_csv('./Data/featuresfloatvf.csv')
+    accounts=pd.read_csv('./Data/accounts.csv')
+    accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
+    data['screen_name'] = data['screen_name'].astype(str).str.lower()
+    ac=accounts[~accounts['screen_name'].isin(data['screen_name'])]
+    ac=ac.drop(['predict_proba'],axis=1)
+    ac.to_csv('./Data/featuresfloatvf.csv', mode='a', header=False, index=False)
+    os.remove('./Data/accounts.csv')
+    run()
+
+def predicte(name):
+    
+    # data = pd.read_csv('./Data/featuresfloatvf.csv')
+    # column_names = data.columns.tolist()
+    
+    try:
+        accounts=pd.read_csv('./Data/accounts.csv')
+        accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
+        dp = accounts[accounts['screen_name']==str.lower(name)]
+        print(dp.shape[0] == 0)
+        if dp.shape[0] == 0:
+            x=1
+        else :
+             print("data exist in accounts")
+             return {"result":str(dp[0]['account_type']),"proba":str(dp[0]['predict_proba'][0])}            
+    except Exception as e:
+         x=-1
+    account=get_inpute_data.get_details(name)
+    dp=pd.DataFrame(account, index=[0])
+    dp1=dp.drop('screen_name',axis=1)   
+    clf=joblib.load("clf.pkl")
+    predicted=clf.predict(dp1)
+    predict_proba=clf.predict_proba(dp1)[:,1]
+    dp1['account_type']=predicted
+    dp1['predict_proba']=predict_proba
+    dp1['screen_name']=dp['screen_name']
+    if x ==1:
+        dp1.to_csv('./Data/accounts.csv', mode='a', header=False, index=False)
+    else:
+         dp1.to_csv('./Data/accounts.csv', index=False)
+    return {"result":predicted[0],"proba":predict_proba[0]}
+
+
+
+def changepredicte(name,type):
+    
+    # data = pd.read_csv('./Data/featuresfloatvf.csv')
+    # column_names = data.columns.tolist()
+    
+    try:
+        accounts=pd.read_csv('./Data/accounts.csv')
+        accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
+        dp = accounts[accounts['screen_name']==str.lower(name)]
+        print(dp.shape[0] == 0)
+        if dp.shape[0] == 0:
+            return {"message": "accounts with that name does not exist"}
+        else :
+             dp[0]['account_type']=type
+             return {"message":"done please rerun"}            
+    except Exception as e:
+         x=-1
+    account=get_inpute_data.get_details(name)
+    dp=pd.DataFrame(account, index=[0])
+    dp1=dp.drop('screen_name',axis=1)   
+    clf=joblib.load("clf.pkl")
+    predicted=clf.predict(dp1)
+    predict_proba=clf.predict_proba(dp1)[:,1]
+    dp['account_type']=predicted
+    dp['predict_proba']=predict_proba
+    if x ==1:
+        dp.to_csv('./Data/accounts.csv', mode='a', header=False, index=False)
+    else:
+         dp.to_csv('./Data/accounts.csv', index=False)
+    return {"result":predicted[0],"proba":predict_proba[0]}
+rerun()
 
