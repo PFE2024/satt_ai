@@ -4,11 +4,9 @@ from bs4 import BeautifulSoup
 
 print("Open Chrome browser")
 driver = webdriver.Chrome()
-# Change the tiktok link
+# the tiktok link
 driver.get("https://www.tiktok.com/@almalikaq")
 
-# IF YOU GET A TIKTOK CAPTCHA, CHANGE THE TIMEOUT HERE
-# to 60 seconds, just enough time for you to complete the captcha yourself.
 time.sleep(1)
 
 scroll_pause_time = 1
@@ -25,7 +23,7 @@ while True:
     break 
 
 soup = BeautifulSoup(driver.page_source, "html.parser")
-# this class may change, so make sure to inspect the page and find the correct class
+
 videos = soup.find_all("div", {"class": "tiktok-yz6ijl-DivWrapper e1cg0wnj1"})
 
 print(len(videos))
