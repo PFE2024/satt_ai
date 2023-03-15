@@ -28,6 +28,3 @@ pip freeze > requirements2_venv.txt
 
 
 pip install -r requirements2_venv.txt
-
-run flask
-waitress-serve --port=8080 --call app:create_app
