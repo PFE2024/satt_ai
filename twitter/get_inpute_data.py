@@ -45,9 +45,10 @@ def levenshtein_distance(s1, s2):
 
 def creation_year(year):
     try:
-        dt = datetime.strptime(str(year), '%Y-%m-%d %H:%M:%S')
+        dt = datetime.datetime.strptime(str(year), '%Y-%m-%d %H:%M:%S')
         return dt.year
-    except:
+    except  Exception as e:
+        
         return 0
 
 
@@ -57,15 +58,15 @@ def test_url(url):
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
         response = requests.get(url, headers=headers, timeout=30)
       
-        print(response.status_code)
+       
         if response.status_code == 200:
-            print("work")
+            
             return 1
         else:
-            print("don't")
+           
             return -1
     except Exception as e:
-        print("except", e)
+       
         return 0
 
 
@@ -75,6 +76,8 @@ lang_list = list(enumerate(pd.unique(pd.array(data['tweet_language']))))
 
 lang_dict = {name: i for i, name in lang_list}
 
+def convert_string_to_datetime(date):
+	return datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
 
 def get_details(username):
 
@@ -82,6 +85,7 @@ def get_details(username):
         userdata = api.get_user(screen_name=username)
 
     except Exception as e:
+        
         return
         # 200 is the max
 
@@ -95,21 +99,19 @@ def get_details(username):
     retweeted = 0
     most_recent_post = 0
     tweet_language = ''
-    print("url", user["url"])
+    
     try:
         timeline = api.user_timeline(
             screen_name=username, count=200, include_rts=True, tweet_mode="extended")
         if len(timeline) >= 1:
-            most_recent_post = convert_twitter_datetime_to_string(
-                timeline[0]._json["created_at"])
+            most_recent_post = convert_twitter_datetime_to_string(timeline[0]._json["created_at"])
             tweet_language = timeline[0]._json["lang"]
             for tweet in timeline:
                 tweet = tweet._json
                 retweeted += tweet["retweet_count"]
                 if ("retweeted_status" in tweet):
                     num_of_retweets_by_user += 1
-                tweet_time = creation_year(
-                    convert_twitter_datetime_to_string(tweet["created_at"]))
+                tweet_time = convert_string_to_datetime(convert_twitter_datetime_to_string(tweet["created_at"]))
                 if (tweet_time < end_date and tweet_time > start_date):
                     num_of_tweets_this_week += 1
                 monday_to_sunday[datetime.datetime.weekday(tweet_time)] += 1
@@ -125,9 +127,8 @@ def get_details(username):
     user["verified"] = int(user["verified"])
     userNameScore = 1 - (levenshtein_distance(user["screen_name"], user["name"]) / max(
         len(user["screen_name"]), len(user["name"])))
-    dateofjoin = creation_year(
-        convert_twitter_datetime_to_string(user["created_at"]))
-    most_recent_post = creation_year(most_recent_post)
+    dateofjoin =creation_year(convert_twitter_datetime_to_string(user["created_at"]))
+    most_recent_post =creation_year(most_recent_post)
     avg_tweets_by_hour_of_day = round(
         sum(twelve_am_to_eleven_pm)/len(twelve_am_to_eleven_pm), 3)
     avg_tweets_by_day_of_week = round(
@@ -135,23 +136,21 @@ def get_details(username):
     user_data = {
         "verified": user["verified"],
         "statuses": user["statuses_count"],
-        "userNameScore": userNameScore,
-        "location": user["location"],
-        "URL works": user["url"],
-        "date_joined": dateofjoin,
-        "most_recent_post": most_recent_post,
-        "following": user["friends_count"],
+         "location": user["location"],
+          "date_joined": dateofjoin,
+           "most_recent_post": most_recent_post,
+            "following": user["friends_count"],
         "followers": user["followers_count"],
-        "likes": user["favourites_count"],
+"favourites": user["favourites_count"],
         "lists": user["listed_count"],
         "tweet_language": tweet_language,
-        "tweets_this_week": num_of_tweets_this_week,
-        "retweet_ratio": int(num_of_retweets_by_user / 2),
+           "tweets_this_week": num_of_tweets_this_week,
+        "retweet": int(num_of_retweets_by_user),
         "retweeted_count": int(retweeted),
-        "avg_tweets_by_day_of_week": avg_tweets_by_day_of_week,
+ "URL works": user["url"],
+        "userNameScore": userNameScore,
         "avg_tweets_by_hour_of_day": avg_tweets_by_hour_of_day,
+        "avg_tweets_by_day_of_week": avg_tweets_by_day_of_week,
+        "screen_name":user["screen_name"],
     }
     return (user_data)
-
-
-print(get_details('BillGates'))
