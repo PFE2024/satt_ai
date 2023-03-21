@@ -75,6 +75,9 @@ def predicte(name):
     except Exception as e:
          x=-1
     account=get_inpute_data.get_details(name)
+    if 'message' in account:
+    
+        return account
     dp=pd.DataFrame(account, index=[0])
     dp1=dp.drop('screen_name',axis=1)
     try:

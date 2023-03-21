@@ -117,7 +117,7 @@ def get_details(username):
         else:
             pass
     except Exception as e:
-        pass
+        return {"message":"can't get user_timeline"}
     user["url"] = test_url(user["url"])
     lang_dict = pd.read_csv("lang_dict1.csv", index_col=0).squeeze("columns")
     
