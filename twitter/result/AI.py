@@ -57,7 +57,7 @@ def rerun():
     os.remove('./accounts.csv')
     return run()
 
-def predicte(name):
+def predicte(name,access_key,access_secret):
     
     # data = pd.read_csv('./featuresfloatvf.csv')
     # column_names = data.columns.tolist()
@@ -66,17 +66,20 @@ def predicte(name):
         accounts=pd.read_csv('./accounts.csv')
         accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
         dp = accounts[accounts['screen_name']==str.lower(name)]
-        
+        x=0
+        print(dp.shape[0])
         if dp.shape[0] == 0:
             x=1
         else :
-             print("data exist in accounts")
-             return {"result":str(dp[0]['account_type']),"proba":str(dp[0]['predict_proba'][0])}            
+            print("accounts exist")
+            ac = dp.iloc[0]
+            r={"result":"bot" if str(ac['account_type']) == "0" else "human","proba":str(ac['predict_proba']),"score":str(ac['predict_proba']*5)}
+            return r            
     except Exception as e:
+         print("Exception file dosen't exist")
          x=-1
-    account=get_inpute_data.get_details(name)
+    account=get_inpute_data.get_details(name,access_key,access_secret)
     if 'message' in account:
-    
         return account
     dp=pd.DataFrame(account, index=[0])
     dp1=dp.drop('screen_name',axis=1)
@@ -91,9 +94,9 @@ def predicte(name):
     dp1['screen_name']=dp['screen_name']
     if x ==1:
         dp1.to_csv('./accounts.csv', mode='a', header=False, index=False)
-    else:
+    elif x == -1:
          dp1.to_csv('./accounts.csv', index=False)
-    return {"result":str(predicted[0]),"proba":str(predict_proba[0])}
+    return {"result":"bot" if str(predicted[0]) == "0" else "human","score":str(predict_proba[0]*5),"proba":str(predict_proba[0])}
 
 
 

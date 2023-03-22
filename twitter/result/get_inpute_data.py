@@ -8,13 +8,8 @@ import requests
 from decouple import config
 # import pymongo
 import json
-consumer_key = config('consumer_key')
-consumer_secret = config('consumer_secret')
-access_key = config('access_key')
-access_secret = config('access_secret')
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_key, access_secret)
-api = tweepy.API(auth, wait_on_rate_limit=True)
+
+
 
 
 def convert_twitter_datetime_to_string(date):
@@ -77,9 +72,18 @@ def test_url(url):
 def convert_string_to_datetime(date):
 	return datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
 
-def get_details(username):
+def get_details(username,access_key,access_secret):
 
     try:
+        consumer_key1 = config('consumer_key')
+        consumer_secret1 = config('consumer_secret')
+        access_key1=config('access_key')
+        access_secret1=config('access_secret')
+        auth = tweepy.OAuthHandler(consumer_key1, consumer_secret1)
+        auth.set_access_token(access_key1, access_secret1)
+        
+
+        api = tweepy.API(auth, wait_on_rate_limit=True)
         userdata = api.get_user(screen_name=username)
 
     except Exception as e:
@@ -99,6 +103,12 @@ def get_details(username):
     tweet_language = ''
     
     try:
+        consumer_key = config('TWITTER_CONSUMER_KEY')
+        consumer_secret = config('TWITTER_CONSUMER_SECRET')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_key,access_secret)
+
+        api = tweepy.API(auth, wait_on_rate_limit=True)
         timeline = api.user_timeline(
             screen_name=username, count=200, include_rts=True, tweet_mode="extended")
         if len(timeline) >= 1:

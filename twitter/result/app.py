@@ -15,7 +15,9 @@ def predicte():
         request_data = request.data
         request_data = json.loads(request_data.decode('utf-8')) 
         nom = request_data['nom']
-        prediction=AI.predicte(nom)
+        access_key= request_data['access_key']
+        access_secret= request_data['access_secret']
+        prediction=AI.predicte(nom,access_key,access_secret)
         json_object = json.dumps(prediction, indent = 4) 
         return json_object
     else:
