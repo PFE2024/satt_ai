@@ -21,15 +21,20 @@ def predicte():
     else:
         prediction = ""
     return prediction
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def main():
     return 'welcome'
-@app.route('/run', methods=['POST'])
+@app.route('/accounts', methods=['GET'])
+def accounts():
+    accounts=pd.read_csv('./accounts.csv')
+    accounts = accounts.to_json(orient='records')
+    return accounts
+@app.route('/run', methods=['GET'])
 def run():
     json_object = json.dumps(AI.run(), indent = 4) 
     return json_object
 
-@app.route('/rerun', methods=['POST'])
+@app.route('/rerun', methods=['GET'])
 def rerun():
     json_object = json.dumps(AI.rerun(), indent = 4) 
     return json_object
