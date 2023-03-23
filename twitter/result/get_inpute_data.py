@@ -103,14 +103,17 @@ def get_details(username,access_key,access_secret):
     tweet_language = ''
     
     try:
-        consumer_key = config('TWITTER_CONSUMER_KEY')
-        consumer_secret = config('TWITTER_CONSUMER_SECRET')
-        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-        auth.set_access_token(access_key,access_secret)
-
-        api = tweepy.API(auth, wait_on_rate_limit=True)
-        timeline = api.user_timeline(
+        try:
+            timeline = api.user_timeline(
             screen_name=username, count=200, include_rts=True, tweet_mode="extended")
+        except :
+            consumer_key = config('TWITTER_CONSUMER_KEY')
+            consumer_secret = config('TWITTER_CONSUMER_SECRET')
+            auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+            auth.set_access_token(access_key,access_secret)
+            api = tweepy.API(auth, wait_on_rate_limit=True)
+            timeline = api.user_timeline(
+                screen_name=username, count=200, include_rts=True, tweet_mode="extended")
         if len(timeline) >= 1:
             most_recent_post = convert_twitter_datetime_to_string(timeline[0]._json["created_at"])
             tweet_language = timeline[0]._json["lang"]
