@@ -1,16 +1,19 @@
 {
-    "include": ["src/**/*", "index.js"],
+
+    "include": ["/**/*", "index.js"],
+  
     "compilerOptions": {
   
-        "outDir": "dist",
-      
-       "target": "ES3",
-      
-       "strict": true,
-      
-       "esModuleInterop": true,
-      
-        "module": "commonjs"
-      
-        }
+    "outDir": "dist",
+  
+   "target": "ES3",
+  
+   "strict": true,
+  
+   "esModuleInterop": true,
+  
+    "module": "commonjs"
+  
+    }
+  
     }
