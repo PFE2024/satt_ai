@@ -76,7 +76,21 @@ class TwitterPreprocessor:
             .remove_non_ascii()\
             .remove_numbers() \
             .remove_blank_spaces() 
-
+    
+    def desc_preprocess(self):
+        return self \
+            .remove_urls() \
+            .remove_mentions() \
+            .remove_hashtags() \
+            .remove_twitter_reserved_words() \
+            .remove_emojis() \
+            .remove_punctuation() \
+            .remove_single_letter_words() \
+            .lowercase() \
+            .remove_non_ascii()\
+            .remove_numbers() \
+            .remove_blank_spaces()
+    
     def partially_preprocess(self):
         return self \
             .remove_urls() \

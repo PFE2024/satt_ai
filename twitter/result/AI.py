@@ -22,7 +22,7 @@ import joblib
 import os
 # # load data
 def run():
-    data = pd.read_csv('./featuresfloatvf.csv')
+    data = pd.read_csv('./datavf.csv')
     # x=data.loc[:,['statuses' , 'date_joined' , 'most_recent_post' , 'following' , 'followers' , 'likes', 'retweet' , 'retweeted_count'  ,'avg_tweets_by_hour_of_day', 'avg_tweets_by_day_of_week']]
     x=data.iloc[:, :-2]
     y = data.account_type.values.tolist()

@@ -165,7 +165,7 @@ def get_details(username,access_key,access_secret):
            "tweets_this_week": num_of_tweets_this_week,
         "retweet": int(num_of_retweets_by_user),
         "retweeted_count": int(retweeted),
- "URL works": user["url"],
+ "url": user["url"],
         "userNameScore": userNameScore,
         "avg_tweets_by_hour_of_day": avg_tweets_by_hour_of_day,
         "avg_tweets_by_day_of_week": avg_tweets_by_day_of_week,
