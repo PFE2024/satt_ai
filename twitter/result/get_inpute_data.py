@@ -128,11 +128,8 @@ def get_details(username,access_key,access_secret):
         return {"message":"can't get user_timeline"}
     user["url"] = test_url(user["url"])
     lang_dict = pd.read_csv("lang_dict1.csv", index_col=0).squeeze("columns")
-    
     lang_dict = dict(lang_dict.items())
-    
     lang_dict.setdefault(tweet_language, len(lang_dict)+1)
-   
     tweet_language = lang_dict[tweet_language]
     lang_dict = pd.Series(lang_dict)
     lang_dict.to_csv('./lang_dict1.csv')

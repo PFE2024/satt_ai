@@ -66,19 +66,19 @@ def predicte(name,access_key,access_secret):
         accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
         dp = accounts[accounts['screen_name']==str.lower(name)]
         x=0
-        print(dp.shape[0])
+        # print(dp.shape[0])
         if dp.shape[0] == 0:
             x=1
         else :
-            print("accounts exist")
+            # print("accounts exist")
             ac = dp.iloc[0]
             r={"result":"bot" if str(ac['account_type']) == "0" else "human","proba":str(ac['predict_proba']),"score":str(ac['predict_proba']*5)}
             return r            
     except Exception as e:
-         print("Exception file dosen't exist")
+         # print("Exception file dosen't exist")
          x=-1
     account=get_inpute_data.get_details(name,access_key,access_secret)
-    print(account)
+    # print(account)
     if 'message' in account:
         return account
     dp=pd.DataFrame(account, index=[0])
