@@ -14,10 +14,10 @@ def predicte():
     if request.method == "POST":
         request_data = request.data
         request_data = json.loads(request_data.decode('utf-8')) 
-        nom = request_data['nom']
-        access_key= request_data['access_key']
-        access_secret= request_data['access_secret']
-        prediction=AI.predicte(nom,access_key,access_secret)
+        username = request_data['username']
+        access_token_key= request_data['access_token_key']
+        access_token_secret= request_data['access_token_secret']
+        prediction=AI.predicte(username,access_token_key,access_token_secret)
         json_object = json.dumps(prediction, indent = 4) 
         return json_object
     else:
@@ -43,9 +43,9 @@ def rerun():
 @app.route('/change', methods=['POST'])
 def update():
     request_data=request.json
-    nom = request_data['nom']
+    username = request_data['username']
     type = request_data['type']
-    return json.dumps(AI.changepredicte(nom,type), indent = 4)  
+    return json.dumps(AI.changepredicte(username,type), indent = 4)  
 def create_app():
    return app
 
