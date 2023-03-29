@@ -48,12 +48,12 @@ def rerun():
         accounts=pd.read_csv('./accounts.csv')
     except :
         return {"message":"there is nothing to add"}
-    data = pd.read_csv('./featuresfloatvf.csv')
+    data = pd.read_csv('./datavf.csv')
     accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
     data['screen_name'] = data['screen_name'].astype(str).str.lower()
     ac=accounts[~accounts['screen_name'].isin(data['screen_name'])]
     ac=ac.drop(['predict_proba'],axis=1)
-    ac.to_csv('./featuresfloatvf.csv', mode='a', header=False, index=False)
+    ac.to_csv('./datavf.csv', mode='a', header=False, index=False)
     os.remove('./accounts.csv')
     return run()
 
@@ -61,24 +61,24 @@ def predicte(name,access_key,access_secret):
     
     # data = pd.read_csv('./featuresfloatvf.csv')
     # column_names = data.columns.tolist()
-    
     try:
         accounts=pd.read_csv('./accounts.csv')
         accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
         dp = accounts[accounts['screen_name']==str.lower(name)]
         x=0
-        print(dp.shape[0])
+        # print(dp.shape[0])
         if dp.shape[0] == 0:
             x=1
         else :
-            print("accounts exist")
+            # print("accounts exist")
             ac = dp.iloc[0]
             r={"result":"bot" if str(ac['account_type']) == "0" else "human","proba":str(ac['predict_proba']),"score":str(ac['predict_proba']*5)}
             return r            
     except Exception as e:
-         print("Exception file dosen't exist")
+         # print("Exception file dosen't exist")
          x=-1
     account=get_inpute_data.get_details(name,access_key,access_secret)
+    # print(account)
     if 'message' in account:
         return account
     dp=pd.DataFrame(account, index=[0])

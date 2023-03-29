@@ -9,9 +9,6 @@ from decouple import config
 # import pymongo
 import json
 
-
-
-
 def convert_twitter_datetime_to_string(date):
     return time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(date, '%a %b %d %H:%M:%S +0000 %Y'))
 
@@ -81,14 +78,12 @@ def get_details(username,access_key,access_secret):
         access_secret1=config('access_secret')
         auth = tweepy.OAuthHandler(consumer_key1, consumer_secret1)
         auth.set_access_token(access_key1, access_secret1)
-        
-
         api = tweepy.API(auth, wait_on_rate_limit=True)
         userdata = api.get_user(screen_name=username)
-
+    except tweepy.error.TweepError as e:
+        return {"message": str(e)}
     except Exception as e:
-        
-        return
+        return {"message":"can't get user"}
         # 200 is the max
 
     end_date = datetime.datetime.now()
@@ -133,11 +128,8 @@ def get_details(username,access_key,access_secret):
         return {"message":"can't get user_timeline"}
     user["url"] = test_url(user["url"])
     lang_dict = pd.read_csv("lang_dict1.csv", index_col=0).squeeze("columns")
-    
     lang_dict = dict(lang_dict.items())
-    
     lang_dict.setdefault(tweet_language, len(lang_dict)+1)
-   
     tweet_language = lang_dict[tweet_language]
     lang_dict = pd.Series(lang_dict)
     lang_dict.to_csv('./lang_dict1.csv')
