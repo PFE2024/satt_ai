@@ -1,4 +1,4 @@
-verified,statuses,location,date_joined,most_recent_post,following,followers,favourites,lists,tweet_language,tweets_this_week,retweet,retweeted_count,URL works,userNameScore,avg_tweets_by_hour_of_day,avg_tweets_by_day_of_week,account_type,predict_proba,screen_name
+verified,statuses,location,date_joined,most_recent_post,following,followers,favourites,lists,tweet_language,tweets_this_week,retweet,retweeted_count,url,userNameScore,avg_tweets_by_hour_of_day,avg_tweets_by_day_of_week,account_type,predict_proba,screen_name
 1,10039,1,2009,2023,738,1718531,1304,4914,1,49,150,31929,1,0.5555555555555556,8.333,28.571,1,0.98,stanwawrinka
 1,4040,1,2011,2023,771,9262371,3498,16571,1,0,45,361952,1,0.1428571428571429,8.333,28.571,1,0.98,djokernole
 1,5068,1,2016,2023,7,2667894,1248,1178,3,73,8,150790,1,0.0,8.333,28.571,1,0.75,gea_sa
