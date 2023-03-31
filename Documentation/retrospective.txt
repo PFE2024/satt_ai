@@ -1,0 +1,28 @@
+sptint1 retrospective
+se qui va bien :
+*on a decouvrire les different alforithme de ML et surtout les algorithme qui repondre a nos besoin (classification )
+*on a trouver une base de donnes de twitter sur kaggle (35000 account) et on a utiliser twitter api pour la rendre mieux compatible avec nos besoin (on a collecter tous les donnes qu'on peut avoir sur les comptes )
+ce qui ne marche pas :
+*on n'a pas trouvez un source officiel de datas (donc on a pas sure si les donnes sont a 100% correcte ou non ) (rq c'est bourquoi in a lui appliquer twitter api pour supprimer s'il existe les compte suspended ou n'existe pas )
+
+
+sptiny2 retrospective
+se qui va bien :
+*on a netoyyer les donnes (supprimer les vide champs , supprimer les emojes , ponctuation hashtag ... de description du compte)
+*on a convertire les champs de type texte a des nombre ( tweet_language , url , location , verified , date_joined , most_recent_post, avg_tweets_by_day_of_week, avg_tweets_by_hour_of_day )
+*on a cree une autre column qui est userNameScore qui est le score de l'identidication (identique) entre username et display name on utilisant  Levenshtein distance 
+
+ce qui ne marche pas :
+*on n'a pas trouvez comment convertire la description a un nombre ou un groupe de nombre 
+la methode qu'on a trouver c'est la methode CountVectorizer de bibleotheque (il va rendre chaque word en une column la resultat sera une dataframe avec tous les words comme column et les rows sont un ensemble de 0 et 1 ) sklearn mais la probleme qu'elle provoque comme resultat un nombre enorme de column plus que 34000 column 
+ce qui va rendre le modele de prendre beaucoup de temps lors de l'exicution 
+(on a tester ca avec random forest on a utilier que les column de description (on a pas ajouter les autre caracteristique des comptes)
+l'execution de code prends plus que 30 min et il crach plusieurs fois 
+donc on a decidee de eliminer la description (bio du compte ) pour le moment jusqu'on trouve une autre solution
+*on a commencer par cree une relation entre years_of_join et le nombre de following et ca par le calcule de avg de following
+pour les compte humain qui on un compte depuis moin d'une annes ,de 2 annes vers 4 annes , et les autre de plus que 5 annes
+puis on a compares chaque compte par le avg de sont groupe si leur nombre de following <= avg il va avoir 1 comme resultat si non -1
+on a trouver que la resulat de cette relattion et plus de 31000 avont un 1 et les autre -1 ce qui n'est pas satisfiante 
+on a tester ca aussi avec most resent post and followers on a trouver presque la meme resultat apres une conversation avec notre encadreur on a decidee de reject ses sous-tache et d'avance a un autre user story
+
+
