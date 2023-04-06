@@ -87,7 +87,6 @@ class TwitterPreprocessor:
             .remove_punctuation() \
             .remove_single_letter_words() \
             .lowercase() \
-            .remove_non_ascii()\
             .remove_numbers() \
             .remove_blank_spaces()
     
