@@ -78,7 +78,11 @@ def predicte(name,access_key,access_secret):
     except Exception as e:
          print("Exception file dosen't exist")
          x=-1
+    print("name "+name)
+    print("name "+access_key)
+    print("name "+access_secret)
     account=get_inpute_data.get_details(name,access_key,access_secret)
+    print("acc ",account)
     if 'message' in account:
         return account
     dp=pd.DataFrame(account, index=[0])

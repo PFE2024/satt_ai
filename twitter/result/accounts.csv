@@ -1,4 +1,4 @@
-verified,statuses,location,date_joined,most_recent_post,following,followers,favourites,lists,tweet_language,tweets_this_week,retweet,retweeted_count,URL works,userNameScore,avg_tweets_by_hour_of_day,avg_tweets_by_day_of_week,account_type,predict_proba,screen_name
+verified,statuses,location,date_joined,most_recent_post,following,followers,favourites,lists,tweet_language,tweets_this_week,retweet,retweeted_count,url,userNameScore,avg_tweets_by_hour_of_day,avg_tweets_by_day_of_week,account_type,predict_proba,screen_name
 1,10039,1,2009,2023,738,1718531,1304,4914,1,49,150,31929,1,0.5555555555555556,8.333,28.571,1,0.98,stanwawrinka
 1,4040,1,2011,2023,771,9262371,3498,16571,1,0,45,361952,1,0.1428571428571429,8.333,28.571,1,0.98,djokernole
 1,5068,1,2016,2023,7,2667894,1248,1178,3,73,8,150790,1,0.0,8.333,28.571,1,0.75,gea_sa
@@ -11,3 +11,5 @@ verified,statuses,location,date_joined,most_recent_post,following,followers,favo
 0,6902,1,2021,2023,21,18,7,0,1,118,0,0,0,0.8571428571428572,8.333,28.571,0,0.2,angrybirdbotai
 1,69747,1,2007,2023,178,71732152,14993,100455,1,40,27,112130,1,1.0,8.333,28.571,0,0.74,nasa
 0,1,1,2023,2023,3,0,1,0,24,0,0,0,0,0.9375,0.042,0.143,0,0.36,ChamsAbdelwahed
+0,1090,1,2008,2018,404,395,516,127,1,0,116,14609,1,1.0,8.167,28.0,1,0.66,Chams
+0,665,1,2007,2023,105,26750,756,211,1,41,64,1852,1,0.15384615384615385,8.333,28.571,1,0.77,safe

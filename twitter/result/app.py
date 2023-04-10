@@ -5,12 +5,14 @@ import  AI
 import numpy as np 
 import pandas as pd 
 import json
+from flask_cors import CORS
 app = Flask(__name__)
+cors = CORS(app)
 
-
-@app.route('/predicte', methods=['GET', 'POST'])
+@app.route('/ai/predicte', methods=['GET', 'POST'])
 def predicte():
-    # If a form is submitted
+    # If a form is submitted //  headers = {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true'}
+    
     if request.method == "POST":
         request_data = request.data
         request_data = json.loads(request_data.decode('utf-8')) 
@@ -23,24 +25,24 @@ def predicte():
     else:
         prediction = ""
     return prediction
-@app.route('/', methods=['GET'])
+@app.route('/ai', methods=['GET'])
 def main():
     return 'welcome'
-@app.route('/accounts', methods=['GET'])
+@app.route('/ai/accounts', methods=['GET'])
 def accounts():
     accounts=pd.read_csv('./accounts.csv')
     accounts = accounts.to_json(orient='records')
     return accounts
-@app.route('/run', methods=['GET'])
+@app.route('/ai/run', methods=['GET'])
 def run():
     json_object = json.dumps(AI.run(), indent = 4) 
     return json_object
 
-@app.route('/rerun', methods=['GET'])
+@app.route('/ai/rerun', methods=['GET'])
 def rerun():
     json_object = json.dumps(AI.rerun(), indent = 4) 
     return json_object
-@app.route('/change', methods=['POST'])
+@app.route('/ai/change', methods=['POST'])
 def update():
     request_data=request.json
     nom = request_data['nom']
@@ -48,4 +50,3 @@ def update():
     return json.dumps(AI.changepredicte(nom,type), indent = 4)  
 def create_app():
    return app
-

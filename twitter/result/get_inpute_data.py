@@ -81,7 +81,6 @@ def get_details(username,access_key,access_secret):
         access_secret1=config('access_secret')
         auth = tweepy.OAuthHandler(consumer_key1, consumer_secret1)
         auth.set_access_token(access_key1, access_secret1)
-        
 
         api = tweepy.API(auth, wait_on_rate_limit=True)
         userdata = api.get_user(screen_name=username)
