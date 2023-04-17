@@ -1,0 +1,66 @@
+US : user story
+T : tache
+
+
+
+Product backlog 
+US2 - preparation des donnes
+US3 - pretraitement de donnes
+US4 - selectionee les caracteristiques à utiliser dans le modele de tiktok
+US5 - tester les modeles de AI (statistique)
+US6 - hyperparametrer le modele 
+US7 - pretraitement de compte a evaluer
+
+
+
+
+
+les sprints de release 2 :
+*goal* cree un modele de detection des compte robot tiktok
+
+********
+sprint1 : Collecte des données
+*goal* collecter un ensemble de données sur les comptes tiktok qui ont été étiquetés robots ou humain
+US1- preparation des donnes
+T*recherche des compte human et robot 
+=>   dans notre base chaque compte doit avoir un ensemble de caracteristique et un champs qui determine human or bot
+on a pas trouvez un source de donnes de tiktok ni officiel ni sur kagle
+T*utiliser api tiktok developper pour avoir les donnes generale des compte 
+=> on a essaiee d'avoir un application sur tiktok developer mais tiktok a revesuer notre demande plusieur fois  donc on a utiliser l'application de la societe
+=> on ne peut avoir les donnes generale sur tiktok que lorsque on abtient un acces token (qui sera donnes apres que l'utilisateur nous donnes leur permission)
+T*enregistrer la dataset dans un fichier csv
+
+=====> comme un dernier choix on a proposer d'utiliser les donnes de twitter pour tiktok bien sur avec des petite changement 
+notre proposition ete accepter pour le moment par notre encadreur de la societe jusqu'avoir si le AI est efficase
+si non on charche une autre methode
+********
+sprint2 : pretraitement des donnees  et choix du modele
+*goal* préparer les données pour l'analyse en utilisant des techniques telles que le nettoyage de données, la normalisation et la transformation puis tester les modele de classification
+US3 - pretraitement de donnes
+T*nettoyer les donnes
+T*convertir les chaine a des nombre
+
+US4 - tester les modeles de AI (statistique)
+T*tester les modèles
+T*comparer les score de train et de test 
+********
+sprint 3 : Mise en œuvre
+*goal* integrer ce modele dans l'application satt
+
+US4 - selectionee les caracteristiques à utiliser dans le modele de tikttok 
+T*découvrire la relation entre les different features 
+T*selectioner les caracteristique en relation avec la resultat 
+
+US6 - hyperparametrer le modele 
+T*etuder les parametre de l'algorithme
+T*tester les choix possible 
+T*choisir la meilleur resultat
+
+US7 - pretraitement de compte a evaluer
+T* collecter les donnes du compte (api ou scraping)
+T* nettoyer les donnes
+
+US8 - mise en oeuvre le modele 
+T*développer un api 
+*** end relase 2
+

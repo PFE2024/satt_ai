@@ -1,0 +1,87 @@
+US : user story
+T : tache
+
+
+
+Product backlog 
+US1 - étude des algorithmes de classification(documentaion)
+US2 - preparation des donnes
+US3 - pretraitement de donnes
+US4 - selectionee les caracteristiques à utiliser dans le modele de twitter
+US5 - tester les modeles de AI (statistique)
+US6 - hyperparametrer le modele 
+US7 - pretraitement de compte a evaluer
+
+US8: selectionee les caracteristiques à utiliser dans le modele de tiktok
+US9:pretraitement de compte a evaluer
+
+
+
+
+
+les sprints de release 1 :
+*goal* cree un modele de detection des compte robot twitter
+
+********
+sprint1 : Collecte des données
+*goal* collecter un ensemble de données sur les comptes twitter qui ont été étiquetés robots ou humain
+US1 - étude des algorithmes de classification(documentaion)
+T*processus ,caractéristiques, Avantage  et  inconvénient de RF
+T*processus ,caractéristiques, Avantage  et  inconvénient de DT
+T*processus ,caractéristiques, Avantage  et  inconvénient de GB
+T*processus ,caractéristiques, Avantage  et  inconvénient de SVM
+T*processus ,caractéristiques, Avantage  et  inconvénient de LR
+T*processus ,caractéristiques, Avantage  et  inconvénient de NN
+
+US2 - preparation des donnes
+T*recherche des compte human et robot 
+
+T*utiliser api twitter developper pour avoir les donnes generale des compte 
+T*enregistrer la dataset dans un fichier csv
+
+********
+sprint2 : pretraitement des donnees  et choix du modele
+*goal* préparer les données pour l'analyse en utilisant des techniques telles que le nettoyage de données, la normalisation et la transformation puis tester les modele de classification
+US3 - pretraitement de donnes
+T*nettoyer les donnes
+T*convertir les chaine a des nombre
+T*crée une relation entre date de creation et nombre de followers
+T* crée une relation entre le nombre de following et nombre de followers
+T*crée une relation entre le nombre de like et nombre de followers
+T*crée une relation entre le nombre de posts et nombre de followers
+T*crée une relation entre le nombre de partage (retweet) et nombre de followers
+
+US4 - tester les modeles de AI (statistique)
+T*tester les modèles
+T*comparer les score de train et de test 
+
+US5 - choisir une template d'application
+T*chercher les templates angular 
+T*tester la template qui est compatible avec nos besoin
+T* nettoyer la template 
+
+********
+sprint 3 : Mise en œuvre
+*goal* integrer ce modele dans l'application satt
+
+US4 - selectionee les caracteristiques à utiliser dans le modele de twitter 
+T*découvrire la relation entre les different features 
+T*selectioner les caracteristique en relation avec la resultat 
+
+US6 - hyperparametrer le modele 
+T*etuder les parametre de l'algorithme
+T*tester les choix possible 
+T*choisir la meilleur resultat
+
+US7 - pretraitement de compte a evaluer
+T* collecter les donnes du compte (api ou scraping)
+T* nettoyer les donnes
+
+US8 - mise en oeuvre le modele 
+T*développer un api 
+*** end relase 1
+
+
+
+
+
