@@ -101,32 +101,27 @@ def tiktok(tiktokProfile):
             pass
 
         u["is_verified"] = int(u["is_verified"])
-        uNameScore = 1 - (levenshtein_distance(u["username"], u["display_name"]) / max(
-            len(u["username"]), len(u["display_name"])))
+        #uNameScore = 1 - (levenshtein_distance(u["username"], u["display_name"]) / max(
+          #  len(u["username"]), len(u["display_name"])))
 
         most_recent_post = creation_year(most_recent_post)
-        avg_videos_by_hour_of_day = round(
-            sum(twelve_am_to_eleven_pm)/len(twelve_am_to_eleven_pm), 3)
-        avg_videos_by_day_of_week = round(
-            sum(monday_to_sunday)/len(monday_to_sunday), 3)
+       # avg_videos_by_hour_of_day = round(
+         #   sum(twelve_am_to_eleven_pm)/len(twelve_am_to_eleven_pm), 3)
+       # avg_videos_by_day_of_week = round(
+          #  sum(monday_to_sunday)/len(monday_to_sunday), 3)
         u_data = {
-            "verified": u["is_verified"],
-            "statuses": u["video_count"],
-            # "location": u["location"],
-
-            "most_recent_post": most_recent_post,
+            "hasProfilePicture": u["hasProfilePicture"],
             "following": u["following_count"],
-            "followers": u["follower_count"],
-            "favourites": u["likes_count"],
-
-            "videos_this_week": num_of_videos_this_week,
-
-            "retweeted_count": int(retweeted),
-
-            "userNameScore": uNameScore,
-            "avg_tweets_by_hour_of_day": avg_videos_by_hour_of_day,
-            "avg_tweets_by_day_of_week": avg_videos_by_day_of_week,
-            "username": u["username"],
+            "follower": u["follower_count"],
+            "HasAccountDescription":u["has_account_description"],
+            "likes":u["likes_count"],
+            "posts": most_recent_post,
+            "AverageNumberOfHashtags":u["average_number_of_hashtags"], 
+            "AverageNumberOfComments":u["AverageNumberOfComments"],
+            "AverageNumberOfShare":u["AverageNumberOfShare"], 
+            "AverageNumberOfLikes":u["AverageNumberOfLikes"],
+            "AverageNumberOfLinkedProfiles":u["AverageNumberOfLinkedProfiles"], 
+            "AverageNumberOfViews":u["AverageNumberOfViews"],
         }
         return u_data
     except Exception as error:

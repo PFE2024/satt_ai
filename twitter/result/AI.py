@@ -1,5 +1,3 @@
-
-
 # # import
 import sys
 
@@ -22,7 +20,7 @@ import joblib
 import os
 # # load data
 def run():
-    data = pd.read_csv('./datavf.csv')
+    data = pd.read_csv('./dataFinal.csv')
     # x=data.loc[:,['statuses' , 'date_joined' , 'most_recent_post' , 'following' , 'followers' , 'likes', 'retweet' , 'retweeted_count'  ,'avg_tweets_by_hour_of_day', 'avg_tweets_by_day_of_week']]
     x=data.iloc[:, :-2]
     y = data.account_type.values.tolist()
@@ -41,19 +39,20 @@ def run():
     y_pred_train = clf.predict(x_train)
     y_pred_test = clf.predict(x_test)
     joblib.dump(clf, "clf.pkl")
-    return {"message":"done","Training Accuracy score":metrics.accuracy_score(y_train, y_pred_train),"Testing Accuracy score":metrics.accuracy_score(y_test, y_pred_test)}
+    return {"message":"done","Training Accuracy score":metrics.accuracy_score(y_train, y_pred_train),
+            "Testing Accuracy score":metrics.accuracy_score(y_test, y_pred_test)}
 
 def rerun():  
     try:
         accounts=pd.read_csv('./accounts.csv')
     except :
         return {"message":"there is nothing to add"}
-    data = pd.read_csv('./datavf.csv')
+    data = pd.read_csv('./dataFinal.csv')
     accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
     data['screen_name'] = data['screen_name'].astype(str).str.lower()
     ac=accounts[~accounts['screen_name'].isin(data['screen_name'])]
     ac=ac.drop(['predict_proba'],axis=1)
-    ac.to_csv('./datavf.csv', mode='a', header=False, index=False)
+    ac.to_csv('./dataFinal.csv', mode='a', header=False, index=False)
     os.remove('./accounts.csv')
     return run()
 

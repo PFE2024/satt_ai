@@ -144,23 +144,20 @@ def get_details(username,access_key,access_secret):
     avg_tweets_by_day_of_week = round(
         sum(monday_to_sunday)/len(monday_to_sunday), 3)
     user_data = {
-        "verified": user["verified"],
-        "statuses": user["statuses_count"],
-         "location": user["location"],
-          "date_joined": dateofjoin,
-           "most_recent_post": most_recent_post,
-            "following": user["friends_count"],
+       "statuses": user["statuses_count"],
+        "date_joined": dateofjoin,
+        "most_recent_post": most_recent_post,
+        "following": user["friends_count"],
         "followers": user["followers_count"],
-"favourites": user["favourites_count"],
+        "favourites": user["favourites_count"],
         "lists": user["listed_count"],
-        "tweet_language": tweet_language,
-           "tweets_this_week": num_of_tweets_this_week,
+        "tweets_this_week": num_of_tweets_this_week,
         "retweet": int(num_of_retweets_by_user),
         "retweeted_count": int(retweeted),
- "url": user["url"],
         "userNameScore": userNameScore,
-        "avg_tweets_by_hour_of_day": avg_tweets_by_hour_of_day,
         "avg_tweets_by_day_of_week": avg_tweets_by_day_of_week,
+        'engagment_rate' :(user["statuses_count"] + retweeted +user["listed_count"] / 1 if user["followers_count"] ==0 else user["followers_count"]) * 100,
         "screen_name":user["screen_name"],
     }
     return (user_data)
+get_details("safe","","")
