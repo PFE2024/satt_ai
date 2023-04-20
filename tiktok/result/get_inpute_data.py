@@ -120,9 +120,7 @@ def tiktok(tiktokProfile):
             "favourites": u["likes_count"],
 
             "videos_this_week": num_of_videos_this_week,
-
             "retweeted_count": int(retweeted),
-
             "userNameScore": uNameScore,
             "avg_tweets_by_hour_of_day": avg_videos_by_hour_of_day,
             "avg_tweets_by_day_of_week": avg_videos_by_day_of_week,

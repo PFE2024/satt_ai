@@ -27,15 +27,6 @@ def run():
     x=data.iloc[:, :-2]
     y = data.account_type.values.tolist()
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42,stratify=y)
-    
-    # # # scale features
-    # # # Create an instance of StandardScaler
-    # scaler = StandardScaler()
-    # # Fit the scaler to your data
-    # x_train = scaler.fit_transform(x_train)
-    # x_test = scaler.transform(x_test)
-    # sm = ADASYN(random_state=42)
-    # x_train,y_train = sm.fit_resample(x_train,y_train)
     clf=RandomForestClassifier()
     clf.fit(x_train,y_train)
     y_pred_train = clf.predict(x_train)
