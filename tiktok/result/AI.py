@@ -1,8 +1,5 @@
-
-
 # # import
 import sys
-
 import numpy as np 
 import pandas as pd 
 from sklearn.model_selection import train_test_split
@@ -23,9 +20,9 @@ import os
 # # load data
 def run():
     data = pd.read_csv('./cleandata.csv')
-    # x=data.loc[:,['statuses' , 'date_joined' , 'most_recent_post' , 'following' , 'followers' , 'likes', 'retweet' , 'retweeted_count'  ,'avg_tweets_by_hour_of_day', 'avg_tweets_by_day_of_week']]
+    # x=data.loc[:,['hasProfilePicture' , 'following' , 'follower' , 'HasAccountDescription' , 'likes' , 'posts', 'AverageNumberOfHashtags' , 'AverageNumberOfComments'  ,'AverageNumberOfShare', 'AverageNumberOfLikes','AverageNumberOfLinkedProfiles', 'AverageNumberOfViews']]
     x=data.iloc[:, :-1]
-    y = data.account_type.values.tolist()
+    y = data.IsABot.values.tolist()
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42,stratify=y)
     clf=RandomForestClassifier()
     clf.fit(x_train,y_train)
@@ -39,19 +36,16 @@ def rerun():
         accounts=pd.read_csv('./accounts.csv')
     except :
         return {"message":"there is nothing to add"}
-    data = pd.read_csv('./datavf.csv')
+    data = pd.read_csv('./cleandata.csv')
     accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
     data['screen_name'] = data['screen_name'].astype(str).str.lower()
     ac=accounts[~accounts['screen_name'].isin(data['screen_name'])]
     ac=ac.drop(['predict_proba'],axis=1)
-    ac.to_csv('./datavf.csv', mode='a', header=False, index=False)
+    ac.to_csv('./cleandata.csv', mode='a', header=False, index=False)
     os.remove('./accounts.csv')
     return run()
 
-def predicte(name,access_key,access_secret):
-    
-    # data = pd.read_csv('./featuresfloatvf.csv')
-    # column_names = data.columns.tolist()
+def predicte(tiktokProfile):
     try:
         accounts=pd.read_csv('./accounts.csv')
         accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
@@ -63,12 +57,12 @@ def predicte(name,access_key,access_secret):
         else :
             # print("accounts exist")
             ac = dp.iloc[0]
-            r={"result":"bot" if str(ac['account_type']) == "0" else "human","proba":str(ac['predict_proba']),"score":str(ac['predict_proba']*5)}
+            r={"result":"bot" if str(ac['IsABot']) == "0" else "human","proba":str(ac['predict_proba']),"score":str(ac['predict_proba']*5)}
             return r            
     except Exception as e:
          # print("Exception file dosen't exist")
          x=-1
-    account=get_inpute_data.get_details(name,access_key,access_secret)
+    account=get_inpute_data.tiktok(tiktokProfile)
     # print(account)
     if 'message' in account:
         return account
@@ -80,7 +74,7 @@ def predicte(name,access_key,access_secret):
         run()
     predicted=clf.predict(dp1)
     predict_proba=clf.predict_proba(dp1)[:,1]
-    dp1['account_type']=predicted
+    dp1['IsABot']=predicted
     dp1['predict_proba']=predict_proba
     dp1['screen_name']=dp['screen_name']
     if x ==1:
@@ -92,7 +86,6 @@ def predicte(name,access_key,access_secret):
 
 
 def changepredicte(name,type):
-    # data = pd.read_csv('./featuresfloatvf.csv')
     # column_names = data.columns.tolist()
     try:
         accounts=pd.read_csv('./accounts.csv')
@@ -103,8 +96,8 @@ def changepredicte(name,type):
         if dp.shape[0] == 0:
             return {"message": "accounts with that name does not exist"}
         else :
-            #  dp[0]['account_type']=type
-             accounts.loc[accounts['screen_name']==str.lower(name), 'account_type'] = type
+            #  dp[0]['IsABot']=type
+             accounts.loc[accounts['screen_name']==str.lower(name), 'IsABot'] = type
             
              accounts.to_csv('./accounts.csv', index=False)
              return {"message":"done please rerun"}            
