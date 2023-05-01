@@ -60,16 +60,11 @@ def test_url(url):
     except Exception as e:
        
         return 0
-
-
-
-
-
-
 def convert_string_to_datetime(date):
 	return datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
 
-def get_details(username,access_key,access_secret):
+def get_details(username,access_key="",access_secret=""):
+
 
     try:
         consumer_key1 = config('consumer_key')
@@ -156,8 +151,8 @@ def get_details(username,access_key,access_secret):
         "retweeted_count": int(retweeted),
         "userNameScore": userNameScore,
         "avg_tweets_by_day_of_week": avg_tweets_by_day_of_week,
-        'engagment_rate' :(user["statuses_count"] + retweeted +user["listed_count"] / 1 if user["followers_count"] ==0 else user["followers_count"]) * 100,
+        'engagment_rate' :( retweeted  / (1 if user["followers_count"] ==0 else user["followers_count"])) * 100,
+        
         "screen_name":user["screen_name"],
     }
     return (user_data)
-get_details("safe","","")
