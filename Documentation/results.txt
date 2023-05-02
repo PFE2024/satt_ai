@@ -1,0 +1,36 @@
+combine 2 models twitter (best 2 models)
+combine 2 models tiktok (best 2 models)
+
+api
+
+twitter :
+DT : over sampling + feature selection => cv 0.76 , ac 0.85 *
+     cv 5:  0.653887284128924
+GB : over sampling + feature selection => cv 0.81 , ac 0.87 *
+   cv 5:  0.7443898826056363
+LR : over sampling + column relation + scaler => cv 0.76 , ac 0.79
+    cv 5:  0.7469876384105469
+NN :  over sampling + column relation + scaler => ac 0.86
+ cv 5: 0.7783002678714711
+
+RF: over sampling + feature selection   => cv 0.83 , ac 0.90 *
+   cv 5:  0.7295917465960572
+
+SVM: over sampling +column relation + scaler  =>cv 0.80, ac 0.84 *
+ cv 5: 0.7774984137564962
+
+RF + GB : over sampling + feature selection  =>cv 10: 0.82, ac 0.89 *
+cv 5: 0.7348576010072956 
+NN + SVM : over sampling +column relation + scaler  => ac 0.85 
+ cv 5: 0.78
+=> the best choise is random forest oversampling + feature selection 
+
+
+tiktok  :
+DT : over sampling + feature selection => cv 0.89 , ac 0.89 * 
+GB : over sampling + feature selection => cv  0.92 , ac 0.93 *
+LR :tomklink undersimpling + feature selection  => cv 0.82 , ac 0.84
+NN :oversampling +  feature selection +scale => cv 0.84,ac 0.86
+RF: over sampling  => cv 0.93 , ac 0.93 *
+SVM: undersampling +feature selection +scale  =>cv 0.81, ac 0.84   
+RF + GB : over sampling   =>cv 0.929, ac 0.93 *

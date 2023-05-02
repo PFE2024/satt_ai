@@ -25,13 +25,10 @@ les sprints de release 1 :
 ********
 sprint1 : Collecte des données
 *goal* collecter un ensemble de données sur les comptes twitter qui ont été étiquetés robots ou humain
+
 US1 - étude des algorithmes de classification(documentaion)
-T*processus ,caractéristiques, Avantage  et  inconvénient de RF
-T*processus ,caractéristiques, Avantage  et  inconvénient de DT
-T*processus ,caractéristiques, Avantage  et  inconvénient de GB
-T*processus ,caractéristiques, Avantage  et  inconvénient de SVM
-T*processus ,caractéristiques, Avantage  et  inconvénient de LR
-T*processus ,caractéristiques, Avantage  et  inconvénient de NN
+TS1: decouvrir le AI,ML,DP.
+decrire les algorithme de classification(RF , GB ...)
 
 US2 - preparation des donnes
 T*recherche des compte human et robot 
