@@ -19,7 +19,6 @@ def levenshtein_distance(s1, s2):
         return levenshtein_distance(s2, s1)
     if n == 0:
         return m
-
     previous_row = range(n+1)
     for i, c1 in enumerate(s1):
         current_row = [i+1]
@@ -64,23 +63,26 @@ def convert_string_to_datetime(date):
 	return datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
 
 def get_details(username,access_key="",access_secret=""):
-
-
     try:
-        consumer_key1 = config('consumer_key')
-        consumer_secret1 = config('consumer_secret')
-        access_key1=config('access_key')
-        access_secret1=config('access_secret')
-        auth = tweepy.OAuthHandler(consumer_key1, consumer_secret1)
-        auth.set_access_token(access_key1, access_secret1)
+        # consumer_key1 = config('consumer_key')
+        # consumer_secret1 = config('consumer_secret')
+        # access_key1=config('access_key')
+        # access_secret1=config('access_secret')
+        # auth = tweepy.OAuthHandler(consumer_key1, consumer_secret1)
+        # auth.set_access_token(access_key1, access_secret1)
+        consumer_key = config('TWITTER_CONSUMER_KEY')
+        consumer_secret = config('TWITTER_CONSUMER_SECRET')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_key,access_secret)
+        
         api = tweepy.API(auth, wait_on_rate_limit=True)
         userdata = api.get_user(screen_name=username)
     except tweepy.error.TweepError as e:
+        print('erreur consumer key')
         return {"message": str(e)}
     except Exception as e:
         return {"message":"can't get user"}
         # 200 is the max
-
     end_date = datetime.datetime.now()
     start_date = datetime.datetime.now() - datetime.timedelta(days=7)
     user = userdata._json
@@ -91,7 +93,6 @@ def get_details(username,access_key="",access_secret=""):
     retweeted = 0
     most_recent_post = 0
     tweet_language = ''
-    
     try:
         try:
             timeline = api.user_timeline(
@@ -118,8 +119,10 @@ def get_details(username,access_key="",access_secret=""):
                 monday_to_sunday[datetime.datetime.weekday(tweet_time)] += 1
                 twelve_am_to_eleven_pm[tweet_time.hour] += 1
         else:
+           
             pass
     except Exception as e:
+        print('erreur Consumer Key')
         return {"message":"can't get user_timeline"}
     user["url"] = test_url(user["url"])
     lang_dict = pd.read_csv("lang_dict1.csv", index_col=0).squeeze("columns")
