@@ -37,26 +37,26 @@ def rerun():
             "Testing Accuracy score":metrics.accuracy_score(y_test, y_pred_test)}
 
 
-def predicte(name,access_key,access_secret):
+def checkuser(name,access_key,access_secret):
     
     # data = pd.read_csv('./featuresfloatvf.csv')
     # column_names = data.columns.tolist()
-    try:
-        accounts=pd.read_csv('./dataFinal.csv')
-        accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
-        dp = accounts[accounts['screen_name']==str.lower(name)]
-        x=0
-        # print(dp.shape[0])
-        if dp.shape[0] == 0:
-            x=1
-        else :
-            # print("accounts exist")
-            ac = dp.iloc[0]
-            r={"result":"bot" if str(ac['account_type']) == "0" else "human"}
-            return r            
-    except Exception as e:
-         # print("Exception file dosen't exist")
-         x=-1
+    # try:
+    #     accounts=pd.read_csv('./dataFinal.csv')
+    #     accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
+    #     dp = accounts[accounts['screen_name']==str.lower(name)]
+    #     x=0
+    #     # print(dp.shape[0])
+    #     if dp.shape[0] == 0:
+    #         x=1
+    #     else :
+    #         # print("accounts exist")
+    #         ac = dp.iloc[0]
+    #         r={"result":"bot" if str(ac['account_type']) == "0" else "human"}
+    #         return r            
+    # except Exception as e:
+    #      # print("Exception file dosen't exist")
+    #      x=-1
     account=get_inpute_data.get_details(name,access_key,access_secret)
     # print(account)
     if 'message' in account:
@@ -73,12 +73,123 @@ def predicte(name,access_key,access_secret):
     predict_proba=clf.predict_proba(dp1)[:,1]
     dp1['screen_name']=dp['screen_name']
     dp1['account_type']=predicted
-    if x ==1:
-        dp1.to_csv('./dataFinal.csv', mode='a', header=False, index=False)
-    elif x == -1:
-         dp1.to_csv('./accounts.csv', index=False)
-    return {"result":"bot" if str(predicted[0]) == "0" else "human","score":str(predict_proba[0]*5)+"/5"}
+    # dp1.to_csv('./dataFinal.csv', mode='a', header=False, index=False)
+    existing_data = pd.read_csv('./dataFinal.csv')
+    # append the new data to the existing data
+    merged_data = pd.concat([existing_data, dp1], ignore_index=True)
+    # drop the duplicates based on the 'username' column
+    merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
+    # write the merged and de-duplicated data to a new CSV file
+    merged_data.to_csv('./dataFinal.csv', index=False)
+    return {"result":"bot" if str(predicted[0]) == "0" else "human","proba":str(predict_proba[0])}
 
+
+
+def checkfollowers(name,access_key,access_secret):
+    
+    account=get_inpute_data.get_followers_details(name,access_key,access_secret)
+    # print(account)
+    if 'message' in account:
+        return account
+    
+    dp1=pd.DataFrame(account)
+   
+   
+    try:
+        clf=joblib.load("clf.pkl")
+    except:
+        rerun()
+    clf=joblib.load("clf.pkl")
+    resultes=[]
+    resulte=[]
+    nb_bot=0
+    nb=0
+    for i,user in dp1.iterrows():
+        user= user.to_frame().T
+        dp=user
+        user=user.iloc[:, :-1]
+       
+        predicted=clf.predict(user)
+        predict_proba=clf.predict_proba(user)[:,1]
+        
+        user['screen_name']=dp['screen_name'].iloc[0]
+        user['account_type']=predicted
+        nb+=1
+        if  (user['account_type'] == 0.0).any():
+                nb_bot+=1
+        
+        u={"screen_name":dp['screen_name'].iloc[0],"result":"bot" if str(predicted[0]) == "0" else "human","proba":str(round(predict_proba[0],2))}
+        resultes.append(u)
+        resulte.append(user)
+    existing_data = pd.read_csv('./dataFinal.csv')
+    resultes_df = pd.concat(resulte, axis=0, ignore_index=True)
+    
+    # append the new data to the existing data
+    merged_data = pd.concat([existing_data, resultes_df], ignore_index=True)
+    # drop the duplicates based on the 'username' column
+    merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
+    # write the merged and de-duplicated data to a new CSV file
+    merged_data.to_csv('./dataFinal.csv', index=False)
+    prop = (nb_bot / nb) * 100
+    # convert float to string
+    prop_str = str(prop)
+   
+    return {'proportion':prop_str,'resultes':resultes}
+
+
+
+
+
+def checkfriends(name,access_key,access_secret):
+    
+    account=get_inpute_data.get_friends_details(name,access_key,access_secret)
+    # print(account)
+    if 'message' in account:
+        return account
+    
+    dp1=pd.DataFrame(account)
+   
+   
+    try:
+        clf=joblib.load("clf.pkl")
+    except:
+        rerun()
+    clf=joblib.load("clf.pkl")
+    resultes=[]
+    resulte=[]
+    nb_bot=0
+    nb=0
+    for i,user in dp1.iterrows():
+        user= user.to_frame().T
+        dp=user
+        user=user.iloc[:, :-1]
+       
+        predicted=clf.predict(user)
+        predict_proba=clf.predict_proba(user)[:,1]
+        
+        user['screen_name']=dp['screen_name'].iloc[0]
+        user['account_type']=predicted
+        nb+=1
+        if  (user['account_type'] == 0.0).any():
+                nb_bot+=1
+        
+        u={"screen_name":dp['screen_name'].iloc[0],"result":"bot" if str(predicted[0]) == "0" else "human","proba":str(round(predict_proba[0],2))}
+        resultes.append(u)
+        resulte.append(user)
+    existing_data = pd.read_csv('./dataFinal.csv')
+    resultes_df = pd.concat(resulte, axis=0, ignore_index=True)
+    
+    # append the new data to the existing data
+    merged_data = pd.concat([existing_data, resultes_df], ignore_index=True)
+    # drop the duplicates based on the 'username' column
+    merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
+    # write the merged and de-duplicated data to a new CSV file
+    merged_data.to_csv('./dataFinal.csv', index=False)
+    prop = (nb_bot / nb) * 100
+    # convert float to string
+    prop_str = str(prop)
+   
+    return {'proportion':prop_str,'resultes':resultes}
 
 
 def changepredicte(name,type):
