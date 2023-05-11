@@ -29,5 +29,7 @@ pip freeze > requirements2_venv.txt
 
 pip install -r requirements2_venv.txt
 
+
 run flask
+venv/Scripts/Activate.ps1
 waitress-serve --port=8080 --call app:create_app
