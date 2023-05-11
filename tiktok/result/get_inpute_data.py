@@ -7,7 +7,7 @@ import numpy as np
 import requests
 from decouple import config
 import json
-
+import re
 
 def creation_year(year):
     try:
@@ -41,90 +41,84 @@ def levenshtein_distance(s1, s2):
         previous_row = current_row
 
     return previous_row[n]
+def extract_hashtags_mentions_emojis(text):
+    # Extract hashtags
+    hashtags = len(re.findall(r"#(\w+)", text)) 
+    
+    # Extract mentions
+    mentions = len(re.findall(r"@(\w+)", text))
+    
+    return hashtags, mentions
 
-
-def tiktok(tiktokProfile):
+def get_details(tiktokProfile):
     try:
-        allvideos = []
-
+       
+        share = 0
+        like = 0
+        views = 0
+        comments = 0
+        all_videos=0
+        Hashtag=[]
+        LinkedProfiles=[]
+        hashtags= linked_profiles =0
         if not tiktokProfile:
-            return 'indisponible'
+            return {"message":'indisponible'}
         getUrl = f"https://open-api.tiktok.com/oauth/refresh_token?client_key={config('TIKTOK_KEY')}&grant_type=refresh_token&refresh_token={tiktokProfile['refreshToken']}"
         resMedia = requests.get(getUrl)
 
         accessToken = json.loads(resMedia.text)['data']['access_token']
-        u = requests.get('https://open.tiktokapis.com/v2/user/info/?fields=is_verified,created_at,is_private,follower_count,following_count,likes_count,bio_description,display_name,username,video_count', headers={
+        u = requests.get('https://open.tiktokapis.com/v2/user/info/?fields=is_verified,avatar_url,follower_count,following_count,likes_count,bio_description,display_name,username,video_count', headers={
             "Authorization": "Bearer " + accessToken,
         })
 
+        payload = "{\"max_count\":20}"
         u = u.json()['data']['user']
-        cursor = 0
-        nbr_videos = 0
-
-        while True:
-            payload = "{\"max_count\":20" + \
-                "}" if cursor == 0 else "{\"max_count\":10,\"cursor\":" + \
-                str(cursor)+"}"
-            videos = requests.post('https://open.tiktokapis.com/v2/video/list/?fields=create_time,like_count,comment_count,share_count,view_count', headers={
-                "Authorization": "Bearer " + accessToken,
-                "Content-Type": "application/json"
-            }, data=payload)
-
-            has_more = videos.json()['data']['has_more']
-            cursor = videos.json()['data']['cursor']
-            v = videos.json()['data']['videos']
-
-            nbr_videos += len(v)
-            # print("nbr_videos",len(v))
-            allvideos.extend(v)
-            if nbr_videos >= 200 or has_more == False:
-                break
-        # print(allvideos)
-        end_date = datetime.datetime.now()
-        start_date = datetime.datetime.now() - datetime.timedelta(days=7)
-        num_of_videos_this_week = 0
-        monday_to_sunday = [0] * 7
-        twelve_am_to_eleven_pm = [0] * 24
-        retweeted = 0
-        most_recent_post = 0
-        if len(allvideos) >= 1:
-            most_recent_post = convert_string_to_datetime(
-                allvideos[0]["create_time"])
-            for tweet in allvideos:
-                retweeted += tweet["share_count"]
-                tweet_time = convert_string_to_datetime(tweet["create_time"])
-                if (tweet_time < end_date and tweet_time > start_date):
-                    num_of_videos_this_week += 1
-                monday_to_sunday[datetime.datetime.weekday(tweet_time)] += 1
-                twelve_am_to_eleven_pm[tweet_time.hour] += 1
+        HasAccountDescription=1 if u['bio_description'] else 0
+        videos = requests.post('https://open.tiktokapis.com/v2/video/list/?fields=create_time,duration,like_count,comment_count,share_count,view_count,video_description', headers={
+            "Authorization": "Bearer " + accessToken,
+            "Content-Type": "application/json"
+        }, data=payload)
+        videos = videos.json()['data']['videos']
+        if len(videos) >= 1:
+            for video in videos:
+                share += video["share_count"]
+                like += video["like_count"]
+                views += video["view_count"]
+                comments += video["comment_count"]
+               
+                if video['video_description']:
+                    hashtags, linked_profiles = extract_hashtags_mentions_emojis(video['video_description'])
+                    Hashtag.append(hashtags)
+                    LinkedProfiles.append(linked_profiles)
+            all_videos=len(videos)
+           
+            share =share/all_videos
+            like = like/all_videos
+            views = views/all_videos
+            comments = comments/all_videos
+            hashtags =sum(Hashtag)/all_videos
+            linked_profiles=sum(LinkedProfiles)/all_videos
         else:
             pass
-
-        u["is_verified"] = int(u["is_verified"])
-        #uNameScore = 1 - (levenshtein_distance(u["username"], u["display_name"]) / max(
-          #  len(u["username"]), len(u["display_name"])))
-
-        most_recent_post = creation_year(most_recent_post)
-       # avg_videos_by_hour_of_day = round(
-         #   sum(twelve_am_to_eleven_pm)/len(twelve_am_to_eleven_pm), 3)
-       # avg_videos_by_day_of_week = round(
-          #  sum(monday_to_sunday)/len(monday_to_sunday), 3)
+       
+  
         u_data = {
-            "hasProfilePicture": u["hasProfilePicture"],
-            "following": u["following_count"],
-
-            "follower": u["follower_count"],
-            "HasAccountDescription":u["has_account_description"],
-            "likes":u["likes_count"],
-            "posts": most_recent_post,
-            "AverageNumberOfHashtags":u["average_number_of_hashtags"], 
-            "AverageNumberOfComments":u["AverageNumberOfComments"],
-            "AverageNumberOfShare":u["AverageNumberOfShare"], 
-            "AverageNumberOfLikes":u["AverageNumberOfLikes"],
-            "AverageNumberOfLinkedProfiles":u["AverageNumberOfLinkedProfiles"], 
-            "AverageNumberOfViews":u["AverageNumberOfViews"],
-
+            
+              'HasProfilePicture':1.0 if u["avatar_url"] else 0.0,
+                'following':round(u['following_count'], 2) , 
+                'follower':round(u['follower_count'], 2) ,
+            'HasAccountDescription':round(HasAccountDescription, 2),
+              'likes':round(u['likes_count'], 2) ,
+                'posts':round(u['video_count'], 2),
+               
+            'AverageNumberOfHashtags':round(hashtags, 2) ,
+              'AverageNumberOfComments':round(comments, 2) ,
+            'AverageNumberOfShare':round(share, 2) ,
+              'AverageNumberOfLikes':round( like, 2),
+            'AverageNumberOfLinkedProfiles':round(linked_profiles, 2) ,
+            'AverageNumberOfViews':round(views, 2) , 
+             "username":u['username']
         }
         return u_data
     except Exception as error:
-        print('tiktok fetch stats', error)
+        return  {"message":error}
