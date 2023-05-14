@@ -20,15 +20,16 @@ Before using our project, please follow the steps below:
 
 1. Fill in the `.env` file with the necessary credentials and configuration.
 
-2. Install the required packages listed in the `requirements.txt` file.
+2. Install the required dependencies and libraries as specified in the project documentation by `pip3 install -r requirements.txt`.
 
 To utilize this AI model  and its services, follow the steps below:
 
-1. Install the required dependencies and libraries as specified in the project documentation.
 
-2. Import the AI model and relevant functions into your codebase.
 
+1. Import the AI model and relevant functions into your codebase.
+2. Run the services `python wsgi.py` for User Verification Service or `python fo_wsgi.py` for Followers/Following Analysis Service
 3. Use the appropriate API service by calling the corresponding function and providing the required inputs.
+
 4.  Retrieve the output from the API,  which will provide the desired analysis and scores.
 
 ## Directory Structure
