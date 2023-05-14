@@ -6,7 +6,7 @@ This project introduces an AI model designed to aid in verifying the compliance 
 
 ## Features and Functionality
 
-- **User Verification Service:** This service allows users to verify the authenticity of an influencer on Twitter or TikTok. By providing the influencer's username, access token, and oracle type (Twitter or TikTok), the AI model analyzes various parameters to determine if the account is operated by a human or a bot.
+- **User Verification Service:** This service allows users to verify the authenticity of an influencer on Twitter or TikTok. By providing the influencer's username, access token, and oracle type (Twitter or TikTok), the AI model analyzes various parameters to determine if the account is operated by a human or a bot. Additionally, this service provides a change prediction API, allowing users to modify AI results and then retrain the model using the rerun API to improve accuracy.
 
 - **Followers/Following Analysis Service:** This service provides users with the ability to assess the authenticity and quality of an influencer's followers and following on Twitter. By supplying the influencer's username and oracle type, the AI model evaluates the genuineness of their social connections.
 
