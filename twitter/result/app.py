@@ -5,6 +5,7 @@ import  AI
 import numpy as np 
 import pandas as pd 
 import json
+
 app = Flask(__name__)
 
 
@@ -33,7 +34,7 @@ def accounts():
     return accounts
 @app.route('/run', methods=['GET'])
 def run():
-    json_object = json.dumps(AI.run(), indent = 4) 
+    json_object = json.dumps(AI.rerun(), indent = 4) 
     return json_object
 
 @app.route('/rerun', methods=['GET'])

@@ -112,6 +112,7 @@ def tiktok(tiktokProfile):
         u_data = {
             "hasProfilePicture": u["hasProfilePicture"],
             "following": u["following_count"],
+
             "follower": u["follower_count"],
             "HasAccountDescription":u["has_account_description"],
             "likes":u["likes_count"],
@@ -122,6 +123,7 @@ def tiktok(tiktokProfile):
             "AverageNumberOfLikes":u["AverageNumberOfLikes"],
             "AverageNumberOfLinkedProfiles":u["AverageNumberOfLinkedProfiles"], 
             "AverageNumberOfViews":u["AverageNumberOfViews"],
+
         }
         return u_data
     except Exception as error:
