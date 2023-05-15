@@ -45,4 +45,7 @@ While this AI model aims to provide accurate assessments, it is important to not
 ![image](https://github.com/PFE2024/satt_ai/assets/96917892/b846a068-ada2-4a49-a78e-73fb34387d1e)
 ### check followers API:
 ![image](https://github.com/PFE2024/satt_ai/assets/96917892/f9090c8f-9832-488f-8cf2-20d6a62bd783)
+## Acknowledgments
+We would like to express our sincere gratitude to our academic institution, ISET Bizerte, for their invaluable contributions to the development of this project. Their support and guidance have been instrumental in its success.
 
+We would also like to extend our appreciation to the BrosTechnologie team for their continuous support and valuable feedback throughout the entire lifecycle of the project. Their input has greatly contributed to its improvement and overall quality.
