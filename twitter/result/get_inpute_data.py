@@ -107,6 +107,7 @@ def get_details(username,access_key,access_secret):
             auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
             auth.set_access_token(access_key,access_secret)
             api = tweepy.API(auth, wait_on_rate_limit=True)
+           
             timeline = api.user_timeline(
                 screen_name=username, count=200, include_rts=True, tweet_mode="extended")
         if len(timeline) >= 1:
