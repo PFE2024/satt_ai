@@ -19,9 +19,12 @@ def checkuser():
         json_object = json.dumps(prediction, indent = 4) 
         return json_object
     elif request_data['oracle']==0:
-        username = request_data['username']
-        access_token_key= request_data['access_token_key']
-        access_token_secret= request_data['access_token_secret']
+        try:
+            username = request_data['username']
+            access_token_key= request_data['access_token_key']
+            access_token_secret= request_data['access_token_secret']
+        except Exception as e:
+              return {"message":'username or tokens indisponible'}
         prediction=AI.twittercheckuser(username,access_token_key,access_token_secret)
         json_object = json.dumps(prediction, indent = 4) 
         return json_object
@@ -34,7 +37,6 @@ def main():
 
 @app.route('/rerun', methods=['POST'])
 def rerun():
-
     request_data = request.json 
     # If a form is submitted
     if request_data['oracle']==1:

@@ -31,6 +31,6 @@ DT : over sampling + feature selection => cv 0.89 , ac 0.89 *
 GB : over sampling + feature selection => cv  0.92 , ac 0.93 *
 LR :tomklink undersimpling + feature selection  => cv 0.82 , ac 0.84
 NN :oversampling +  feature selection +scale => cv 0.84,ac 0.86
-RF: over sampling  => cv 0.93 , ac 0.93 *
+RF: over sampling + feature selection => cv 0.93 , ac 0.93 *
 SVM: undersampling +feature selection +scale  =>cv 0.81, ac 0.84   
 RF + GB : over sampling   =>cv 0.929, ac 0.93 *
