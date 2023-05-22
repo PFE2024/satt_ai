@@ -1,25 +1,12 @@
-# # import
-import math
-import sys
-import numpy as np 
+
 import pandas as pd 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-import gender_guesser.detector as gender
-import matplotlib.pyplot as plt 
-from datetime import datetime
 from sklearn import metrics
 from imblearn.over_sampling import SMOTE
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.metrics import classification_report
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 import tiktokget_inpute_data 
 import twitterget_inpute_data 
-import csv
 import joblib
-import os
 # # load data
 def tiktokrerun():
     data = pd.read_csv('./tiktokdataFinal.csv')

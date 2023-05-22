@@ -1,9 +1,6 @@
 
-from flask import Flask, request,jsonify
-import joblib
+from flask import Flask, request
 import  AI
-import numpy as np 
-import pandas as pd 
 import json
 
 app = Flask(__name__)

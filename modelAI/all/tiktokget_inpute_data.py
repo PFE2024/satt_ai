@@ -1,9 +1,6 @@
 import requests
 import datetime
-import time
-import tweepy
-import pandas as pd
-import numpy as np
+
 import requests
 from decouple import config
 import json
