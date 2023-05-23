@@ -11,11 +11,11 @@ def checkuser():
     request_data = request.json
     
     # If a form is submitted
-    if request_data['oracle']==1:
+    if request_data['oracle']==6:
         prediction=AI.tiktokcheckuser(request_data)
         json_object = json.dumps(prediction, indent = 4) 
         return json_object
-    elif request_data['oracle']==0:
+    elif request_data['oracle']==4:
         try:
             username = request_data['username']
             access_token_key= request_data['access_token_key']
@@ -36,9 +36,9 @@ def main():
 def rerun():
     request_data = request.json 
     # If a form is submitted
-    if request_data['oracle']==1:
+    if request_data['oracle']==6:
         json_object = json.dumps(AI.tiktokrerun(), indent = 4) 
-    elif request_data['oracle']==0:
+    elif request_data['oracle']==4:
         json_object = json.dumps(AI.twitterrerun(), indent = 4) 
     return json_object
 @app.route('/change', methods=['POST'])
@@ -46,9 +46,9 @@ def update():
     request_data=request.json
     username = request_data['username']
     type = request_data['type']
-    if request_data['oracle']==1:
+    if request_data['oracle']==6:
         return json.dumps(AI.changetiktokpredicte(username,type), indent = 4)  
-    elif request_data['oracle']==0:
+    elif request_data['oracle']==4:
         return json.dumps(AI.changetwitterpredicte(username,type), indent = 4) 
 # def create_app():
 #    return app

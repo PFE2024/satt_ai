@@ -13,7 +13,7 @@ def checkfollowers():
     request_data = json.loads(request_data.decode('utf-8')) 
 
     # If a form is submitted
-    if request.method == "POST" and  request_data['oracle']==0:
+    if request.method == "POST" and  request_data['oracle']==4:
        
         username = request_data['username']
         access_token_key= request_data['access_token_key']
@@ -29,7 +29,7 @@ def checkfriends():
     # If a form is submitted
     request_data = request.data
     request_data = json.loads(request_data.decode('utf-8')) 
-    if request.method == "POST" and  request_data['oracle']==0:
+    if request.method == "POST" and  request_data['oracle']==4:
         
         username = request_data['username']
         access_token_key= request_data['access_token_key']
