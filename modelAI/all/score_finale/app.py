@@ -48,14 +48,14 @@ def checkuser():
                 access_token_key= request_data['access_token_key']
                 access_token_secret= request_data['access_token_secret']
             except Exception as e:
-                return {"message":'username or tokens indisponible'}
+                abort(400,'username or tokens indisponible')
             prediction=AI.twittercheckuser(username,access_token_key,access_token_secret)
             s1=prediction["score"]
             chart=prediction["chart"]
             text=get_twitter_poste(id_Post, access_token_key, access_token_secret)
             prediction=AI.text_confirm(missions,text)
             s2=prediction["score"]
-            x={"human_score":s1,"text_confirm_score":s2,"chart":chart,"score_finale":(s1+s2)/2}
+            x={"human_score":str(s1),"text_confirm_score":str(s2),"chart":chart,"score_finale":str((int(s1)+int(s2))/2)}
             json_object = json.dumps(x, indent = 4) 
             return json_object
         else:

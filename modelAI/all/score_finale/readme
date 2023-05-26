@@ -9,3 +9,4 @@ python wsgi.py   8084
 python fo_wsgi.py   8081
 python text_wsgi.py   8082
 python user_wsgi.py   8080
+python run.py   entrainer les modeles chaque jour a 8h de matain 

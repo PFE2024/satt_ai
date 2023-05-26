@@ -63,20 +63,7 @@ def rerun():
     else:
              abort(400, "this model work only with tiktok and twitter")
     return json_object
-@app.route('/change', methods=['POST'])
-def update():
-    try:
-        request_data=request.json
-        username = request_data['username']
-        type = request_data['type']
-        if request_data['oracle']==6:
-            return json.dumps(AI.changetiktokpredicte(username,type), indent = 4)  
-        elif request_data['oracle']==4:
-            return json.dumps(AI.changetwitterpredicte(username,type), indent = 4) 
-        else:
-             abort(400, "this model work only with tiktok and twitter")
-    except Exception as e:
-        abort(400, str(e))
+
 # def create_app():
 #    return app
 
