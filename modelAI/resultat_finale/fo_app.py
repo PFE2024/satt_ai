@@ -1,7 +1,7 @@
 
 from flask import Flask, abort, jsonify, request
 
-import  AI
+import  twitter_model
 
 import json
 
@@ -27,7 +27,7 @@ def checkfollowers():
             username = request_data['username']
             access_token_key= request_data['access_token_key']
             access_token_secret= request_data['access_token_secret']
-            prediction=AI.checkfollowers(username,access_token_key,access_token_secret)
+            prediction=twitter_model.checkfollowers(username,access_token_key,access_token_secret)
             response = json.dumps(prediction, indent = 4)
             return response
         else:
@@ -45,7 +45,7 @@ def checkfriends():
             username = request_data['username']
             access_token_key= request_data['access_token_key']
             access_token_secret= request_data['access_token_secret']
-            prediction=AI.checkfriends(username,access_token_key,access_token_secret)
+            prediction=twitter_model.checkfriends(username,access_token_key,access_token_secret)
             response = json.dumps(prediction, indent = 4)
             return response
         else:

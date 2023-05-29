@@ -1,6 +1,8 @@
 
 from flask import Flask, abort, jsonify, request
-import  AI
+import  tiktok_model
+import twitter_model
+import text_model
 import json
 
 from clean_input_data import get_twitter_poste
@@ -8,7 +10,6 @@ from clean_input_data import get_tiktok_poste
 
 
 app = Flask(__name__)
-
 
 
 @app.errorhandler(400)
@@ -32,10 +33,10 @@ def checkuser():
             except Exception as e:
                 abort(400, "id poste or messions dosen't exist")
                 
-            prediction=AI.tiktokcheckuser(request_data)
+            prediction=tiktok_model.tiktokcheckuser(request_data)
             s1=prediction["score"]
             text=get_tiktok_poste(id_Post,refresh)
-            prediction=AI.text_confirm(missions,text)
+            prediction=text_model.text_confirm(missions,text)
             s2=prediction["score"]
             x={"human_score":s1,"text_confirm_score":s2,"score_finale":(s1+s2)/2}
             json_object = json.dumps(prediction, indent = 4) 
@@ -49,11 +50,11 @@ def checkuser():
                 access_token_secret= request_data['access_token_secret']
             except Exception as e:
                 abort(400,'username or tokens indisponible')
-            prediction=AI.twittercheckuser(username,access_token_key,access_token_secret)
+            prediction=twitter_model.twittercheckuser(username,access_token_key,access_token_secret)
             s1=prediction["score"]
             chart=prediction["chart"]
             text=get_twitter_poste(id_Post, access_token_key, access_token_secret)
-            prediction=AI.text_confirm(missions,text)
+            prediction=text_model.text_confirm(missions,text)
             s2=prediction["score"]
             x={"human_score":str(s1),"text_confirm_score":str(s2),"chart":chart,"score_finale":str((int(s1)+int(s2))/2)}
             json_object = json.dumps(x, indent = 4) 

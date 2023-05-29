@@ -1,0 +1,16 @@
+analyse DU , DS systeme (acture application web avec les interaction avec api)
+Conception:
+diagramme de classe participante postmane  (client web)->  api (service)   -> modele (controler) -> fichier csv (repository) (depot de donnes base de donnes faire le mapping)
+diagramme de sequence 
+Realisation : capture postman 
+application angular prototype pour afficher  le modele twitter 
+
+
+client web consomer un api accede a un repository pour obtenire des donnes 
+
+
+to do : 
+terminer DC dans partie conception R1
+DS + DC dans R2 et 3
+re entrainer les api pour changer les capture 
+entrainer le partie front pour faire une capture de prototype

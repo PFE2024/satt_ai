@@ -5,7 +5,7 @@ import json
 
 from clean_input_data import get_twitter_poste , get_tiktok_poste
 
-from AI import text_confirm
+from text_model import text_confirm
 
 app = Flask(__name__)
 

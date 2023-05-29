@@ -1,6 +1,7 @@
 
 from flask import Flask, abort, jsonify, request
-import  AI
+import  twitter_model
+import tiktok_model
 import json
 
 app = Flask(__name__)
@@ -26,7 +27,7 @@ def checkuser():
                 refresh= request_data['refreshToken']
             except Exception as e:
                 abort(400, "username or tokens indisponible")
-            prediction=AI.tiktokcheckuser(request_data)
+            prediction=tiktok_model.tiktokcheckuser(request_data)
             json_object = json.dumps(prediction, indent = 4) 
             return json_object
         elif request_data['oracle']==4:
@@ -37,7 +38,7 @@ def checkuser():
             except Exception as e:
                 abort(400, "username or tokens indisponible")
                 
-            prediction=AI.twittercheckuser(username,access_token_key,access_token_secret)
+            prediction=twitter_model.twittercheckuser(username,access_token_key,access_token_secret)
             json_object = json.dumps(prediction, indent = 4) 
             return json_object
         else:
@@ -57,9 +58,9 @@ def rerun():
     request_data = request.json 
     # If a form is submitted
     if request_data['oracle']==6:
-        json_object = json.dumps(AI.tiktokrerun(), indent = 4) 
+        json_object = json.dumps(tiktok_model.tiktokrerun(), indent = 4) 
     elif request_data['oracle']==4:
-        json_object = json.dumps(AI.twitterrerun(), indent = 4) 
+        json_object = json.dumps(twitter_model.twitterrerun(), indent = 4) 
     else:
              abort(400, "this model work only with tiktok and twitter")
     return json_object

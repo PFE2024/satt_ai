@@ -1,5 +1,6 @@
 from flask import Flask, abort, jsonify, request
-import  AI
+import  twitter_model
+import  tiktok_model
 import json
 
 app = Flask(__name__)
@@ -20,9 +21,9 @@ def update():
         username = request_data['username']
         type = request_data['type']
         if request_data['oracle']==6:
-            return json.dumps(AI.changetiktokpredicte(username,type), indent = 4)  
+            return json.dumps(tiktok_model.changetiktokpredicte(username,type), indent = 4)  
         elif request_data['oracle']==4:
-            return json.dumps(AI.changetwitterpredicte(username,type), indent = 4) 
+            return json.dumps(twitter_model.changetwitterpredicte(username,type), indent = 4) 
         else:
              abort(400, "this model work only with tiktok and twitter")
     except Exception as e:
