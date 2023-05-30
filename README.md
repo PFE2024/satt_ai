@@ -13,7 +13,7 @@ This project introduces an AI model designed to aid in verifying the compliance 
 - **Followers/Following Analysis Service:** This service provides users with the ability to assess the authenticity and quality of an influencer's followers and following on Twitter. By supplying the influencer's username and oracle type, the AI model evaluates the genuineness of their social connections.
 
 - **Publication conformity Service:** This service helps analyze the conformity of influencer publications to the campaign guidelines provided by brand partners. By inputting the influencer's post ID, the specific campaign requirements, and oracle type, the AI model evaluates the alignment between the content and the brand's objectives. 
-- **Check all Service:** This service help to make a global score for influencer according to his User Verification score and publications conformity score.
+- **Check all Service:** This service help to make a global score for influencer according to his User Verification score and publications conformity score.      
 **Please note** that the output of these APIs is a score ranging from 1 to 5.
 ## Usage
 
