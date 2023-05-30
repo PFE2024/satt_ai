@@ -20,24 +20,6 @@ def convert_string_to_datetime(date):
     return datetime.datetime.fromtimestamp(date)
 
 
-def levenshtein_distance(s1, s2):
-    m, n = len(s1), len(s2)
-    if m < n:
-        return levenshtein_distance(s2, s1)
-    if n == 0:
-        return m
-
-    previous_row = range(n+1)
-    for i, c1 in enumerate(s1):
-        current_row = [i+1]
-        for j, c2 in enumerate(s2):
-            insertions = previous_row[j+1] + 1
-            deletions = current_row[j] + 1
-            substitutions = previous_row[j] + (c1 != c2)
-            current_row.append(min(insertions, deletions, substitutions))
-        previous_row = current_row
-
-    return previous_row[n]
 def extract_hashtags_mentions_emojis(text):
     # Extract hashtags
     hashtags = len(re.findall(r"#(\w+)", text)) 
