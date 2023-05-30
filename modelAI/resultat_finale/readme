@@ -1,0 +1,12 @@
+
+
+**** install packages *****
+pip3 install -r requirements.txt
+python -m spacy download en_core_web_sm
+**** to run models ****
+python change_wsgi.py   8085
+python wsgi.py   8084
+python fo_wsgi.py   8081
+python text_wsgi.py   8082
+python user_wsgi.py   8080
+python run.py   entrainer les modeles chaque jour a 8h de matain 

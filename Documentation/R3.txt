@@ -1,0 +1,33 @@
+Release 3 : conformiter de publication
+sprint 1
+TS: Rechercher des méthodes de détection de la conformité du texte aux missions
+TS: Découvrir les types de missions publiées par chaque campagne dans SaTT
+US: Créer une méthode qui calcule un score de conformité en ce qui concerne les tags, les mentions et les liens demandés
+US: Créer une méthode qui calcule un score de similarité entre la mission et la publication
+sprint 2
+US: Créer un modèle d'IA qui analyse le sentiment d'après une publication
+US: Mettre en œuvre la fonctionnalité
+US intergration dans satt
+tache :
+US: Calculer un score total à partir des fonctions précédentes
+US : essayer chatgpt api pour donner un score de conformiter
+
+
+
+En tant que scrum team nous devons
+rechercher les diffèrent méthode de décision de conformité des publication aux missions
+
+
+En tant que scrum team nous devons comprendre les missions demandées par les campagnes aux influenceurs.
+
+En tant que scrum team nous devons créer une méthode qui définit le niveau de respect des publications pour les missions, en ce qui concerne les tags, les mentions et les liens.
+
+En tant que scrum team nous devons créer une méthode qui définit le niveau du similarité entre  publications et les missions.
+
+En tant que scrum team nous devons créer un modèle ML qui analyse le sentiment des influenceurs à partir du texte de leurs publications.
+
+En tant que scrum team nous devons
+mettre en œuvre le modele conformiter de publication pour
+l’intégrer dans l’application satt
+
+En tant que scrum team nous devons développer une interface dans l'application SATT pour intégrer notre travail.
