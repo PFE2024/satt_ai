@@ -2,12 +2,10 @@
 import datetime
 import time
 import tweepy
-import pandas as pd
-import numpy as np
 import requests
 from decouple import config
-# import pymongo
-import json
+
+
 
 def convert_twitter_datetime_to_string(date):
     return time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(date, '%a %b %d %H:%M:%S +0000 %Y'))

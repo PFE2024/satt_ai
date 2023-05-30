@@ -2,7 +2,10 @@
 
 **** install packages *****
 pip3 install -r requirements.txt
-
-**** to run check user and check follower_following ****
-python wsgi.py
-python fo_wsgi.py
+python -m spacy download en_core_web_sm
+**** to run models ****
+python change_wsgi.py   8085
+python wsgi.py   8084
+python fo_wsgi.py   8081
+python text_wsgi.py   8082
+python user_wsgi.py   8080

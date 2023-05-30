@@ -1,25 +1,12 @@
-# # import
-import math
-import sys
-import numpy as np 
+
 import pandas as pd 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-import gender_guesser.detector as gender
-import matplotlib.pyplot as plt 
-from datetime import datetime
 from sklearn import metrics
 from imblearn.over_sampling import SMOTE
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.metrics import classification_report
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 import tiktokget_inpute_data 
 import twitterget_inpute_data 
-import csv
 import joblib
-import os
 # # load data
 def tiktokrerun():
     data = pd.read_csv('./tiktokdataFinal.csv')
@@ -57,10 +44,9 @@ def tiktokcheckuser(tiktokProfile):
     merged_data = pd.concat([existing_data, dp1], ignore_index=True)
     # drop the duplicates based on the 'username' column
     merged_data = merged_data[~merged_data['username'].duplicated(keep='last') | merged_data['username'].isnull()]
-    
     # write the merged and de-duplicated data to a new CSV file
     merged_data.to_csv('./tiktokdataFinal.csv', index=False)
-    return {"result":"bot" if str(predicted[0]) == "1" else "human","score":str(math.ceil((1-predict_proba[0])*5))}
+    return {"result":"bot" if predicted[0] == 1 else "human","score":str(round((1-predict_proba[0])*5))}
 
 
 def changetiktokpredicte(name,type):
@@ -75,7 +61,7 @@ def changetiktokpredicte(name,type):
         else :
             #  dp[0]['account_type']=type
             
-            y=  "1" if type == "bot" else 0 if type == "human" else  Exception("erreur type must be bot or human")
+            y=  "1.0" if type == "bot" else "0.0" if type == "human" else  Exception("erreur type must be bot or human")
             if isinstance(y, Exception):
                 raise y
             accounts.loc[accounts['username']==str.lower(name), 'IsABot'] =y
@@ -126,7 +112,7 @@ def twittercheckuser(name,access_key,access_secret):
     merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
     # write the merged and de-duplicated data to a new CSV file
     merged_data.to_csv('./twitterdataFinal.csv', index=False)
-    return {"result":"bot" if str(predicted[0]) == "0" else "human","score":str(math.ceil(predict_proba[0]*5))}
+    return {"result":"bot" if predicted[0] == 0 else "human","score":str(round(predict_proba[0]*5))}
 
 def changetwitterpredicte(name,type):
     # data = pd.read_csv('./featuresfloatvf.csv')
@@ -142,7 +128,7 @@ def changetwitterpredicte(name,type):
         else :
             #  dp[0]['account_type']=type
             
-            y=  "0" if type == "bot" else "1" if type == "human" else  Exception("erreur type must be bot or human")
+            y=  "0.0" if type == "bot" else "1.0" if type == "human" else  Exception("erreur type must be bot or human")
             if isinstance(y, Exception):
                 raise y
             accounts.loc[accounts['screen_name']==str.lower(name), 'account_type'] =y
@@ -167,7 +153,7 @@ def checkfollowers(name,access_key,access_secret):
     clf=joblib.load("twitterclf.pkl")
     resultes=[]
     resulte=[]
-    nb_bot=0
+    nb_humain=0
     nb=0
     for i,user in dp1.iterrows():
         user= user.to_frame().T
@@ -180,9 +166,9 @@ def checkfollowers(name,access_key,access_secret):
         user['screen_name']=dp['screen_name'].iloc[0]
         user['account_type']=predicted
         nb+=1
-        if  (user['account_type'] == 0.0).any():
-                nb_bot+=1
-        u={"screen_name":dp['screen_name'].iloc[0],"score":str(math.ceil(predict_proba[0]*5))}
+        if  (user['account_type'] == 1).any():
+                nb_humain+=1
+        u={"screen_name":dp['screen_name'].iloc[0],"score":str(round(predict_proba[0]*5))}
         resultes.append(u)
         resulte.append(user)
 
@@ -194,10 +180,10 @@ def checkfollowers(name,access_key,access_secret):
     # merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
     # # write the merged and de-duplicated data to a new CSV file
     # merged_data.to_csv('./dataFinal.csv', index=False)
-    prop = (nb_bot / nb) * 100
+    prop = (nb_humain / nb) * 5
     # convert float to string
-    prop_str = str(prop)
-    return {'proportion':prop_str,'resultes':resultes}
+    prop_str = str(round(prop))
+    return {'score':prop_str,'resultes':resultes}
 
 
 def checkfriends(name,access_key,access_secret):
@@ -217,7 +203,7 @@ def checkfriends(name,access_key,access_secret):
     clf=joblib.load("twitterclf.pkl")
     resultes=[]
     resulte=[]
-    nb_bot=0
+    nb_humain=0
     nb=0
     for i,user in dp1.iterrows():
         user= user.to_frame().T
@@ -230,10 +216,10 @@ def checkfriends(name,access_key,access_secret):
         user['screen_name']=dp['screen_name'].iloc[0]
         user['account_type']=predicted
         nb+=1
-        if  (user['account_type'] == 0.0).any():
-                nb_bot+=1
+        if  (user['account_type'] == 1).any():
+                nb_humain+=1
         
-        u={"screen_name":dp['screen_name'].iloc[0],"result":"bot" if str(predicted[0]) == "0" else "human","bot proba":str(round(1-predict_proba[0],2))}
+        u={"screen_name":dp['screen_name'].iloc[0],"score":str(round(predict_proba[0]*5))}
         resultes.append(u)
         resulte.append(user)
     # existing_data = pd.read_csv('./dataFinal.csv')
@@ -245,10 +231,10 @@ def checkfriends(name,access_key,access_secret):
     # merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
     # # write the merged and de-duplicated data to a new CSV file
     # merged_data.to_csv('./dataFinal.csv', index=False)
-    prop = (nb_bot / nb) * 100
+    prop = (nb_humain / nb) * 5
     # convert float to string
-    prop_str = str(prop)
+    prop_str = str(round(prop))
    
-    return {'proportion':prop_str,'resultes':resultes}
+    return {'score':prop_str,'resultes':resultes}
 
 

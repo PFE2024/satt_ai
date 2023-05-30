@@ -1,9 +1,6 @@
 import requests
 import datetime
-import time
-import tweepy
-import pandas as pd
-import numpy as np
+
 import requests
 from decouple import config
 import json
@@ -61,8 +58,8 @@ def get_details(tiktokProfile):
         Hashtag=[]
         LinkedProfiles=[]
         hashtags= linked_profiles =0
-        if not tiktokProfile:
-            return {"message":'indisponible'}
+        if not tiktokProfile or not tiktokProfile['refreshToken']:
+            return {"message":'refreshToken indisponible'}
         getUrl = f"https://open-api.tiktok.com/oauth/refresh_token?client_key={config('TIKTOK_KEY')}&grant_type=refresh_token&refresh_token={tiktokProfile['refreshToken']}"
         resMedia = requests.get(getUrl)
 
