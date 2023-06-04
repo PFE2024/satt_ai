@@ -1,5 +1,5 @@
 from waitress import serve
-from fo_app import app1
+from follower_following_app import app1
 
 if __name__ == "__main__":
   

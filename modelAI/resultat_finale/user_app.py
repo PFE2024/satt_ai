@@ -1,11 +1,12 @@
 
 from flask import Flask, abort, jsonify, request
+from flask_cors import CORS
 import  twitter_model
 import tiktok_model
 import json
 
 app = Flask(__name__)
-
+CORS(app, resources={r"/*": {"origins": "*"}})
 @app.errorhandler(400)
 def handle_bad_request(error):
     # Get the custom error message from the error object

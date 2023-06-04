@@ -5,8 +5,8 @@ import twitter_model
 import text_model
 import json
 
-from clean_input_data import get_twitter_poste
-from clean_input_data import get_tiktok_poste
+from get_input_data import get_twitter_poste
+from get_input_data import get_tiktok_poste
 
 
 app = Flask(__name__)
