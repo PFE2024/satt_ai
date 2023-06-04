@@ -23,7 +23,7 @@ import torch
 from Twitterpreprocessor import TwitterPreprocessor
 
 def twitterrerun():
-    data = pd.read_csv('./twitterdataFinal.csv')
+    data = pd.read_csv('./TwitterAccount.csv')
     # x=data.loc[:,['statuses' , 'date_joined' , 'most_recent_post' , 'following' , 'followers' , 'likes', 'retweet' , 'retweeted_count'  ,'avg_tweets_by_hour_of_day', 'avg_tweets_by_day_of_week']]
     x=data.iloc[:, :-2]
     y = data.account_type.values.tolist()
@@ -56,20 +56,18 @@ def twittercheckuser(name,access_key,access_secret):
     dp1['screen_name']=dp['screen_name']
     dp1['account_type']=predicted
    
-    existing_data = pd.read_csv('./twitterdataFinal.csv')
+    existing_data = pd.read_csv('./TwitterAccount.csv')
   
     merged_data = pd.concat([existing_data, dp1], ignore_index=True)
     # drop the duplicates based on the 'username' column
     merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
     # write the merged and de-duplicated data to a new CSV file
-    merged_data.to_csv('./twitterdataFinal.csv', index=False)
+    merged_data.to_csv('./TwitterAccount.csv', index=False)
     return {"result":"bot" if predicted[0] == 0 else "human","score":str(round(predict_proba[0]*5)),"chart":ac['chart']}
 
 def changetwitterpredicte(name,type):
-    # data = pd.read_csv('./featuresfloatvf.csv')
-    # column_names = data.columns.tolist()
     try:
-        accounts=pd.read_csv('./twitterdataFinal.csv')
+        accounts=pd.read_csv('./TwitterAccount.csv')
         
         accounts['screen_name'] = accounts['screen_name'].astype(str).str.lower()
         dp = accounts[accounts['screen_name']==str.lower(name)]
@@ -84,20 +82,17 @@ def changetwitterpredicte(name,type):
             if isinstance(y, Exception):
                 abort(400, "type must be bot or human")
             accounts.loc[accounts['screen_name']==str.lower(name), 'account_type'] =y
-            accounts.to_csv('./twitterdataFinal.csv', index=False)
+            accounts.to_csv('./TwitterAccount.csv', index=False)
             return {"message":"done please rerun"}            
     except Exception as e:
         abort(400, str(e))
         
-
-
 def checkfollowers(name,access_key,access_secret):
     
     account=twitterget_inpute_data.get_followers_details(name,access_key,access_secret)
     # print(account)
     if 'message' in account:
         abort(400, "can't get account followers")
-    
     dp1=pd.DataFrame(account)
     try:
         clf=joblib.load("twitterclf.pkl")
@@ -112,10 +107,8 @@ def checkfollowers(name,access_key,access_secret):
         user= user.to_frame().T
         dp=user
         user=user.iloc[:, :-1]
-       
         predicted=clf.predict(user)
         predict_proba=clf.predict_proba(user)[:,1]
-        
         user['screen_name']=dp['screen_name'].iloc[0]
         user['account_type']=predicted
         nb+=1

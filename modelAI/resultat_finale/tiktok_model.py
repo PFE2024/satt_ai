@@ -26,7 +26,7 @@ from Twitterpreprocessor import TwitterPreprocessor
 
 # # load data
 def tiktokrerun():
-    data = pd.read_csv('./tiktokdataFinal.csv')
+    data = pd.read_csv('./TiktokAccount.csv')
     x=data.iloc[:, :-2]
     y = data.IsABot.values.tolist()
     smote = SMOTE(random_state=10)
@@ -56,19 +56,19 @@ def tiktokcheckuser(tiktokProfile):
     predict_proba=clf.predict_proba(dp1)[:,1]
     dp1['IsABot']=predicted
     dp1['username']=dp['username']
-    existing_data = pd.read_csv('./tiktokdataFinal.csv')
+    existing_data = pd.read_csv('./TiktokAccount.csv')
     # append the new data to the existing data
     merged_data = pd.concat([existing_data, dp1], ignore_index=True)
     # drop the duplicates based on the 'username' column
     merged_data = merged_data[~merged_data['username'].duplicated(keep='last') | merged_data['username'].isnull()]
     # write the merged and de-duplicated data to a new CSV file
-    merged_data.to_csv('./tiktokdataFinal.csv', index=False)
+    merged_data.to_csv('./TiktokAccount.csv', index=False)
     return {"result":"bot" if predicted[0] == 1 else "human","score":str(round((1-predict_proba[0])*5))}
 
 
 def changetiktokpredicte(name,type):
     try:
-        accounts=pd.read_csv('./tiktokdataFinal.csv')
+        accounts=pd.read_csv('./TiktokAccount.csv')
         
         accounts['username'] = accounts['username'].astype(str).str.lower()
         dp = accounts[accounts['username']==str.lower(name)]
@@ -83,7 +83,7 @@ def changetiktokpredicte(name,type):
             if isinstance(y, Exception):
                 abort(400, "type must be bot or human")
             accounts.loc[accounts['username']==str.lower(name), 'IsABot'] =y
-            accounts.to_csv('./tiktokdataFinal.csv', index=False)
+            accounts.to_csv('./TiktokAccount.csv', index=False)
             return {"message":"done please rerun"}            
     except Exception as e:
         abort(400, str(e))

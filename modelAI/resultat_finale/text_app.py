@@ -3,7 +3,7 @@ from flask import Flask, abort, jsonify, request
 
 import json
 
-from clean_input_data import get_twitter_poste , get_tiktok_poste
+from get_input_data import get_twitter_poste , get_tiktok_poste
 
 from text_model import text_confirm
 
@@ -30,7 +30,7 @@ def checktext():
                 access_token_key= request_data['access_token_key']
                 access_token_secret= request_data['access_token_secret']
             except Exception as e:
-                return {"message":'username or tokens indisponible'}
+                return {"message":'request data  indisponible'}
             text=get_twitter_poste(id_Post, access_token_key, access_token_secret)
             prediction=text_confirm(missions,text)
             json_object = json.dumps(prediction, indent = 4) 
@@ -41,7 +41,7 @@ def checktext():
                 missions =request_data['missions']
                 refresh= request_data['refreshToken']
             except Exception as e:
-                return {"message":'username or tokens indisponible'}
+                return {"message":'request data  indisponible'}
             text=get_tiktok_poste(id_Post,refresh)
             prediction=text_confirm(missions,text)
             json_object = json.dumps(prediction, indent = 4) 

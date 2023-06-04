@@ -285,15 +285,6 @@ def get_friends_details(username,access_key="",access_secret=""):
                 pass
         except Exception as e:
             pass
-        # user["url"] = test_url(user["url"])
-        # lang_dict = pd.read_csv("lang_dict1.csv", index_col=0).squeeze("columns")
-        # lang_dict = dict(lang_dict.items())
-        # lang_dict.setdefault(tweet_language, len(lang_dict)+1)
-        # tweet_language = lang_dict[tweet_language]
-        # lang_dict = pd.Series(lang_dict)
-        # lang_dict.to_csv('./lang_dict1.csv')
-        # user["location"] = int(user["location"] is not None)
-        # user["verified"] = int(user["verified"])
         userNameScore = 1 - (levenshtein_distance(user["screen_name"], user["name"]) / max(
             len(user["screen_name"]), len(user["name"])))
         dateofjoin =creation_year(convert_twitter_datetime_to_string(user["created_at"]))
