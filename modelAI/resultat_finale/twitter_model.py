@@ -40,10 +40,11 @@ def twitterrerun():
 
 def twittercheckuser(name,access_key,access_secret):  
     ac=twitterget_inpute_data.get_details(name,access_key,access_secret)
-    account=ac['user_data']
+  
     # print(account)
-    if 'message' in account:
+    if 'message' in ac:
         abort(400, "can't get account details")
+    account=ac['user_data']
     dp=pd.DataFrame(account, index=[0])
     dp1=dp.drop('screen_name',axis=1)
     try:
