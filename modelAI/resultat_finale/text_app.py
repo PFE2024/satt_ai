@@ -3,12 +3,14 @@ from flask import Flask, abort, jsonify, request
 
 import json
 
+from flask_cors import CORS
+
 from get_input_data import get_twitter_poste , get_tiktok_poste
 
 from text_model import text_confirm
 
 app = Flask(__name__)
-
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.errorhandler(400)
 def handle_bad_request(error):

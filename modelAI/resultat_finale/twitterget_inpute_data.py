@@ -160,6 +160,7 @@ def get_followers_details(username,access_key="",access_secret=""):
     except Exception as e:
         return {"message":"can't get followers "}
         # 200 is the max
+    
     for user_id in userdata:    
         end_date = datetime.datetime.now()
         start_date = datetime.datetime.now() - datetime.timedelta(days=7)

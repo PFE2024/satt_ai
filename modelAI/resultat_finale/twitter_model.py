@@ -127,6 +127,8 @@ def checkfollowers(name,access_key,access_secret):
     # merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
     # # write the merged and de-duplicated data to a new CSV file
     # merged_data.to_csv('./dataFinal.csv', index=False)
+    if (nb==0):
+        return {'score':0}
     prop = (nb_humain / nb) * 5
     # convert float to string
     prop_str = str(round(prop))
@@ -178,6 +180,8 @@ def checkfriends(name,access_key,access_secret):
     # merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
     # # write the merged and de-duplicated data to a new CSV file
     # merged_data.to_csv('./dataFinal.csv', index=False)
+    if (nb==0):
+        return {'score':0}
     prop = (nb_humain / nb) * 5
     # convert float to string
     prop_str = str(round(prop))
