@@ -40,10 +40,11 @@ def twitterrerun():
 
 def twittercheckuser(name,access_key,access_secret):  
     ac=twitterget_inpute_data.get_details(name,access_key,access_secret)
-    account=ac['user_data']
+  
     # print(account)
-    if 'message' in account:
+    if 'message' in ac:
         abort(400, "can't get account details")
+    account=ac['user_data']
     dp=pd.DataFrame(account, index=[0])
     dp1=dp.drop('screen_name',axis=1)
     try:
@@ -126,6 +127,8 @@ def checkfollowers(name,access_key,access_secret):
     # merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
     # # write the merged and de-duplicated data to a new CSV file
     # merged_data.to_csv('./dataFinal.csv', index=False)
+    if (nb==0):
+        return {'score':0}
     prop = (nb_humain / nb) * 5
     # convert float to string
     prop_str = str(round(prop))
@@ -177,6 +180,8 @@ def checkfriends(name,access_key,access_secret):
     # merged_data.drop_duplicates(subset=['screen_name'], inplace=True,keep='last')
     # # write the merged and de-duplicated data to a new CSV file
     # merged_data.to_csv('./dataFinal.csv', index=False)
+    if (nb==0):
+        return {'score':0}
     prop = (nb_humain / nb) * 5
     # convert float to string
     prop_str = str(round(prop))
